@@ -1,0 +1,36 @@
+# Node modules
+node_modules/
+
+# Build output
+build/
+dist/
+
+# Environment files
+.env
+
+# Log files
+*.log
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Editor-specific files
+.vscode/
+.idea/
+*.swp
+
+# Frontend (React) specific
+client/.env
+client/node_modules/
+client/build/
+
+# Backend (Express) specific
+server/.env
+server/node_modules/
+server/logs/
+
+# Miscellaneous
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
