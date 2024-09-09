@@ -1,20 +1,26 @@
 import express from 'express';
-import cors from 'cors';
-import bodyParser from 'body-parser';
+import cors from 'cors';         // Import CORS for handling cross-origin requests
+import bodyParser from 'body-parser';  // Import body-parser for parsing JSON
 import dotenv from 'dotenv';
-import apiRoutes from './routes/api.js';
+import bybitRoutes from './routes/bybitRoutes.js';
 
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const port = process.env.PORT || 3000;
 
+// Enable CORS for all routes
 app.use(cors());
+
+// Use body-parser to parse JSON request bodies
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));  // To parse URL-encoded data
 
-// Use API routes
-app.use('/api', apiRoutes);
-
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+// Use the Bybit routes
+app.use('/', bybitRoutes);
+app.get('/', (req, res) =>{
+    res.send('Welcome to the cryptocurrency API');
+});
+app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
 });
