@@ -1,0 +1,6 @@
+// media queries
+@mixin mq($arg) {
+  @media screen and (max-width: $arg) {
+    @content;
+  }
+}
