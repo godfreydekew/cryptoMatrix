@@ -1,24 +1,5 @@
-import { getBalancesAndCalculateTotal, fetchAllTransactions } from '../services/bybitService.js';
+import { getAllAssetsWithPrice, getBalancesAndCalculateTotal, fetchAllTransactions } from '../services/bybitService.js';
 import getBalance from '../services/allAssets.js';
-
-// Controller to get balance for a specific coin
-const getBalanceForCoin = async (req, res) => {
-    const coin = req.params.coin;  // Coin passed in the URL, or empty for all coins
-    if (!coin) { return res.status(500).json({error: 'Missing coin in the request paramaters'}); }
-    try {
-        const totalUSD = await getBalancesAndCalculateTotal(coin);
-        console.log(totalUSD);
-        if (totalUSD > 0) {
-            res.json({ coin, totalBalanceInUSD: totalUSD });
-        } else {
-            res.status(404).json({ error: `No balance found for ${coin}` });
-        }
-        
-    } catch (error) {
-        console.error('Error fetching total balance:', error);
-        res.status(500).json({ error: `Error fetching balance for${coin}` });
-    }
-};
 
 // Controller to get total balance in USD
 const getTotalBalance = async (req, res) => {
@@ -43,8 +24,19 @@ const getAllTransactions = async (req, res) => {
     }
 };
 
+// Controller to get assets with price
+const fetchAllAssets= async (req, res) => {
+    try {
+        const assets = await getAllAssetsWithPrice();
+        res.json({ assets });
+    } catch (error) {
+        console.error('Error fetching assets:', error);
+        res.status(500).json({ error: 'Error fetching assets' });
+    }
+};
+
 export {
-    getBalanceForCoin,
+    fetchAllAssets,
     getTotalBalance,
     getAllTransactions
 };

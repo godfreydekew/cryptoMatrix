@@ -1,4 +1,5 @@
 import bybitClient from '../config/bybit.js';
+import { getBalancesAndCalculateTotal } from './bybitService.js';
 
 //https://bybit-exchange.github.io/docs/v5/asset/balance/all-balance
 const getBalance = async (accountType = 'FUND', coin = '') => {
@@ -11,5 +12,5 @@ const getBalance = async (accountType = 'FUND', coin = '') => {
     }
 };
 
-
+console.log(await getBalance());
 export default getBalance;
