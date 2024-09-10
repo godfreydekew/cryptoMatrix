@@ -4,13 +4,19 @@ import getBalance from '../services/allAssets.js';
 // Controller to get balance for a specific coin
 const getBalanceForCoin = async (req, res) => {
     const coin = req.params.coin;  // Coin passed in the URL, or empty for all coins
+    if (!coin) { return res.status(500).json({error: 'Missing coin in the request paramaters'}); }
     try {
-        const totalUSD = await getBalancesAndCalculateTotal();
+        const totalUSD = await getBalancesAndCalculateTotal(coin);
         console.log(totalUSD);
-        return res.json({coin, totalBalanceInUSD: totalUSD });
+        if (totalUSD > 0) {
+            res.json({ coin, totalBalanceInUSD: totalUSD });
+        } else {
+            res.status(404).json({ error: `No balance found for ${coin}` });
+        }
+        
     } catch (error) {
         console.error('Error fetching total balance:', error);
-        res.status(500).json({ error: 'Error fetching total balance' });
+        res.status(500).json({ error: `Error fetching balance for${coin}` });
     }
 };
 

@@ -53,6 +53,7 @@ const getBalancesAndCalculateTotal = async (coin = '') => {
         return totalUSD;
     } catch (error) {
         console.error('Error calculating total balance in USD:', error);
+        return -1;
     }
 };
 

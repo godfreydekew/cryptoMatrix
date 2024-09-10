@@ -4,10 +4,10 @@ import { getBalanceForCoin, getTotalBalance, getAllTransactions } from '../contr
 const router = express.Router();
 
 // Route to get balance for a specific coin or all coins
-router.get('/balance/:coin?', getBalanceForCoin);  
+router.get('/coin_balance/:coin', getBalanceForCoin);  
 
 // Route to get total balance in USD
-router.get('/balance/total', getTotalBalance);
+router.get('/total_balance', getTotalBalance);
 
 // Route to get all transactions in the last 100 days
 router.get('/transactions', getAllTransactions);
