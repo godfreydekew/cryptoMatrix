@@ -35,4 +35,18 @@ const fetchTopMovers = async () => {
 
 // console.log(await getTopMovers());
 
-export default fetchTopMovers;
+const fetchCryptoNews = async () => {
+    try {
+        const response = await axios.get('https://api.coingecko.com/api/v3/news');
+        return response.data.data; // Extract news data from the response
+    } catch (error) {
+        console.error('Error fetching cryptocurrency news:', error);
+        throw new Error('Error fetching cryptocurrency news');
+    }
+};
+
+
+export {
+    fetchTopMovers,
+    fetchCryptoNews,
+}
