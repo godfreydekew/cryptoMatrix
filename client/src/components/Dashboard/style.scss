@@ -1,0 +1,85 @@
+@use '../../assets/index';
+@import '../../assets/colors';
+@import '../../assets/mixin';
+
+.pd_db_wrapper {
+  display: flex;
+  background-color: #31353f;
+
+  .db_top {
+  }
+  .pd_main_dashboard {
+    width: 100%;
+    padding: 32px;
+    .db_body {
+      .db_row1 {
+        display: flex;
+        gap: 2%;
+        width: 100%;
+        flex-wrap: wrap;
+        .card {
+          background-color: $primary-color;
+          border-radius: 12px;
+          padding: 24px;
+          width: 20%;
+          @include mq(768px) {
+            width: 42%;
+            margin-bottom: 0.5rem;
+          }
+          @include mq(640px) {
+            width: 100%;
+            margin-bottom: 0.5rem;
+          }
+          p {
+            margin: 0;
+            padding: 0;
+          }
+          .top_part {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+
+            .coin_logo {
+              color: orange;
+              padding: 10px;
+              border-radius: 8px;
+              background-color: #31353f;
+              font-size: 20px;
+            }
+            .name_section {
+              .name {
+                font-size: 16px;
+                font-weight: 500;
+                color: white;
+              }
+              .abb {
+                color: $grey01;
+                font-size: 14px;
+                margin-top: 0.5rem;
+              }
+            }
+          }
+          .bottom_part {
+            margin-top: 24px;
+            .price {
+              color: white;
+              font-size: 20px;
+              font-weight: 700;
+            }
+            .trend {
+              margin-top: 20px;
+              color: $trend-green;
+              font-size: 18px;
+              font-weight: 700;
+            }
+          }
+          transition: box-shadow 0.3s ease; // Add transition for smooth effect
+
+          &:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); // Slight shadow on hover
+          }
+        }
+      }
+    }
+  }
+}

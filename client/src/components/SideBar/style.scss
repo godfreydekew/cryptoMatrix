@@ -1,0 +1,53 @@
+@use '../../assets/index';
+@import '../../assets/colors';
+@import '../../assets/mixin';
+
+.pd_sidebar_wrapper {
+  width: 300px;
+  height: 100vh;
+  max-height: 100vh;
+  overflow-y: hidden;
+  background-color: $primary-color;
+  @include mq(768px) {
+    display: none;
+  }
+  .inner_wrap {
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    height: 95%;
+
+    .logo {
+      padding-left: 0.5rem;
+      color: $hover-color;
+      font-size: 20px;
+      margin: 0;
+    }
+    .nav_flex {
+      padding-left: 0.5rem;
+      display: flex;
+      // justify-content: center;
+      align-items: center;
+      color: $grey01;
+      font-size: 20px;
+      gap: 0.8rem;
+      border-radius: 8px;
+      cursor: pointer;
+      margin: 0.5rem 0;
+      transition: background-color 0.3s ease, color 0.3s ease; // Add transition for smooth hover effect
+
+      .icon {
+        font-size: 24px;
+      }
+
+      &:hover {
+        background-color: $hover-color;
+        color: white;
+      }
+      &.bottom {
+        margin-top: auto;
+        margin-bottom: 0;
+      }
+    }
+  }
+}
