@@ -1,3 +1,4 @@
+//
 import {fetchTopMovers, fetchCryptoNews} from "../services/coinGeckoService.js";
 
 // Controller to get the top movers
