@@ -1,5 +1,4 @@
 import User from '../models/User.js';
-import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 
 // Signup controller
@@ -25,12 +24,11 @@ const loginUser = async (req, res) => {
             return res.status(401).json({ error: 'Invalid credentials' });
         }
 
-        // Generate JWT
-        const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1d' });
-
         // Save session
         req.session.userId = user._id;
-        res.json({ message: 'Logged in successfully', token });
+        req.session.username = user.username;
+
+        res.json({ message: 'Logged in successfully', user: { id: user._id, username: user.username } });
     } catch (error) {
         res.status(500).json({ error: 'Server error' });
     }
@@ -40,7 +38,7 @@ const loginUser = async (req, res) => {
 const logoutUser = (req, res) => {
     req.session.destroy((err) => {
         if (err) return res.status(500).json({ error: 'Logout failed' });
-        res.clearCookie('connect.sid');
+        res.clearCookie('connect.sid'); // Clear session cookie
         res.json({ message: 'Logged out successfully' });
     });
 };
@@ -56,6 +54,7 @@ const updateApiKey = async (req, res) => {
 
         user.apiKey = apiKey;
         user.secretKey = secretKey;
+        console.log(user.apiKey, user.secretKey);
         await user.save();
 
         res.json({ message: 'API keys updated successfully' });

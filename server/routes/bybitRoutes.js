@@ -1,5 +1,6 @@
 import express from 'express';
 import { fetchAllAssets, getTotalBalance, getAllTransactions } from '../controllers/bybitController.js';
+import { isAuthenticated } from '../middleware/auth.js'; 
 
 const router = express.Router();
 

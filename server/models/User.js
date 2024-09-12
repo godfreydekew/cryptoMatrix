@@ -5,8 +5,8 @@ import bcrypt from 'bcryptjs';
 const userSchema = mongoose.Schema({
     username: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    apiKey: { type: String, default: null },
-    secretKey: { type: String, default: null }
+    apiKey: { type: String, required: true },
+    secretKey: { type: String, required: true }
 }, { timestamps: true });
 
 // Encrypt password before saving

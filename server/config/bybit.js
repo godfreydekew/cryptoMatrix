@@ -11,7 +11,6 @@ const API_SECRET = process.env.API_SECRET;
 const USE_TESTNET = process.env.USE_TESTNET === 'TRUE';
 
 
-
 // Test unauthenticated request
 
 
@@ -32,5 +31,7 @@ const bybitClient = new RestClientV5({
 // .catch((error) => {
 //   console.error("Error:", error);
 // });
+
+bybitClient
 
 export default bybitClient;
