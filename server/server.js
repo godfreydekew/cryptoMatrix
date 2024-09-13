@@ -3,6 +3,7 @@ import cors from 'cors';         // Import CORS for handling cross-origin reques
 import bodyParser from 'body-parser';  // Import body-parser for parsing JSON
 import dotenv from 'dotenv';
 import bybitRoutes from './routes/bybitRoutes.js';
+import coinGeckoRoutes from './routes/coinGeckoRoutes.js'
 
 dotenv.config();
 
@@ -17,7 +18,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));  // To parse URL-encoded data
 
 // Use the Bybit routes
-app.use('/', bybitRoutes);
+
+app.use('/bybit', bybitRoutes);
+
+app.use('/movers', coinGeckoRoutes);
 app.get('/', (req, res) =>{
     res.send('Welcome to the cryptocurrency API');
 });
