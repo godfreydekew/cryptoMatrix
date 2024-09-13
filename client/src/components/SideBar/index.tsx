@@ -6,14 +6,21 @@ import { IoWalletOutline } from 'react-icons/io5'
 import { GrTransaction } from 'react-icons/gr'
 import { RiNewsLine } from 'react-icons/ri'
 import { BiLogOut } from 'react-icons/bi'
+import { useNavigate } from 'react-router-dom'
 
 const SideBar = () => {
+  const navigate = useNavigate()
+
   const navLinks = [
-    { name: 'Overview', icon: <CgMenuGridR /> },
-    { name: 'Chart', icon: <IoPieChartOutline /> },
-    { name: 'Transactions', icon: <GrTransaction /> },
-    { name: 'Wallet', icon: <IoWalletOutline /> },
-    { name: 'News', icon: <RiNewsLine /> },
+    { name: 'Overview', icon: <CgMenuGridR />, link: '/dashboard' },
+    { name: 'Chart', icon: <IoPieChartOutline />, link: '/dashboard' },
+    {
+      name: 'Transactions',
+      icon: <GrTransaction />,
+      link: '/dashboard/transactions',
+    },
+    { name: 'Wallet', icon: <IoWalletOutline />, link: '/dashboard' },
+    { name: 'News', icon: <RiNewsLine />, link: '/dashboard' },
   ]
   return (
     <div className="pd_sidebar_wrapper">
@@ -22,7 +29,7 @@ const SideBar = () => {
           <h2>cryptoMatrix</h2>
         </div>
         {navLinks.map((item) => (
-          <div className="nav_flex">
+          <div className="nav_flex" onClick={() => navigate(item.link)}>
             <div className="icon">{item.icon}</div>
             <p>{item.name}</p>
           </div>

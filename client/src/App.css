@@ -1,5 +1,10 @@
+body {
+  font-family: 'Poppins', sans-serif;
+}
+
 .main_container{
   max-height: 100vh;
   overflow-y: hidden;
   background-color: #1b2028;
+  height: 100vh;
 }

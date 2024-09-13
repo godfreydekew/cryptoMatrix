@@ -1,0 +1,22 @@
+@use '../../assets/index' as *;
+
+.pd_landing {
+  background-color: white;
+  min-height: 100vh;
+}
+.login_wrapper {
+  width: 90%;
+  padding: 24px;
+  .auth_tab_container {
+    .tab-btn {
+      font-size: 24px;
+      color: $grey01;
+      font-weight: 500;
+
+      &.active {
+        color: white;
+        border-bottom: 2px solid $primary-color !important;
+      }
+    }
+  }
+}

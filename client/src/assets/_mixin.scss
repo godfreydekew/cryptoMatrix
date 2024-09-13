@@ -4,3 +4,58 @@
     @content;
   }
 }
+@mixin webkit {
+  &::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    background: #f0f2f3;
+  }
+
+  &::-webkit-scrollbar {
+    height: 4px;
+    width: 4px;
+    background: var(--primary);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    background: var(--primary);
+  }
+}
+@mixin webkitlarge {
+  &::-webkit-scrollbar-track {
+    // box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    background: #f0f2f3;
+  }
+
+  &::-webkit-scrollbar {
+    height: 10px;
+    width: 10px;
+    background: var(--primary);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    background: var(--primary);
+  }
+}
+
+@mixin webkitnone {
+  &::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    background: #f0f2f3;
+  }
+
+  &::-webkit-scrollbar {
+    height: 0px;
+    width: 0px;
+    background: var(--primary);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    background: var(--primary);
+  }
+}

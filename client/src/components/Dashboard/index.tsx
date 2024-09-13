@@ -6,7 +6,6 @@ import MainDashBoard from './MainDashBoard'
 const DashBoard = () => {
   return (
     <div className="pd_db_wrapper">
-      <SideBar />
       <MainDashBoard />
     </div>
   )

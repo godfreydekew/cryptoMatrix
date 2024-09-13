@@ -1,0 +1,82 @@
+@use '../../assets/index' as *;
+@use '../../assets/index';
+@import '../../assets/colors';
+@import '../../assets/mixin';
+.pd-modal {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  min-height: 620px;
+  left: 0;
+  background: rgba(0, 0, 0, 0.2);
+  z-index: 60;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .popBox2 {
+    border-radius: 20px;
+    position: relative;
+    height: 90%;
+    max-height: 500px;
+    width: 90%;
+    max-width: 500px;
+    display: flex;
+    background-color: $primary-color;
+    // justify-content: center;
+    // align-items: center;
+    flex-direction: column;
+    overflow-y: auto;
+    color: white;
+    @include webkit;
+
+    @include mq(768px) {
+    }
+
+    @include mq(650px) {
+      width: 90vw;
+    }
+
+    .btn-wrap {
+      display: flex;
+      justify-content: flex-end;
+
+      button {
+        min-width: 118px;
+      }
+    }
+  }
+
+  .close-modal-icon {
+    position: absolute;
+    top: 1rem;
+    width: unset !important;
+    height: unset !important;
+    border: none !important;
+    right: 1rem;
+    background-color: #f1f1f1;
+
+    @include mq(768px) {
+      top: 0.5rem;
+      right: 0.5rem;
+    }
+  }
+
+  .sc_success {
+    font-size: 18px;
+    line-height: 25.6px;
+    text-align: center;
+
+    @include mq(640px) {
+      &.sc_success {
+        font-size: 16px;
+        line-height: 22px;
+        width: 90%;
+        font-weight: 700;
+        // font-family: $graphik_semibold;
+      }
+    }
+  }
+}

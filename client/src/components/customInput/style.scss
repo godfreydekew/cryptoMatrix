@@ -1,0 +1,59 @@
+/* CustomInput.css */
+@use '../../assets/index' as *;
+
+.input-container {
+  margin-bottom: 20px;
+  position: relative;
+  width: 100%;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+input {
+  width: 90%;
+  padding: 10px 15px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  transition: border-color 0.3s ease;
+  &.login-short {
+    max-width: 400px;
+  }
+}
+
+input:focus {
+  border-color: #007bff;
+  outline: none;
+  background-color: #f0f8ff;
+}
+
+.error {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+.error input {
+  border-color: red;
+}
+
+.eye-icon {
+  position: absolute;
+  top: 34px; /* Adjust based on the height of the input */
+  right: 65px;
+  cursor: pointer;
+  font-size: 18px;
+  color: #333;
+  @include mq(640px) {
+    right: 25px;
+  }
+}
+
+.eye-icon:hover {
+  color: #000;
+}
