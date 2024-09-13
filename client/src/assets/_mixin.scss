@@ -7,7 +7,7 @@
 @mixin webkit {
   &::-webkit-scrollbar-track {
     box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-    background: #f0f2f3;
+    background: #3a6ff8;
   }
 
   &::-webkit-scrollbar {
@@ -17,9 +17,9 @@
   }
 
   &::-webkit-scrollbar-thumb {
-    border-radius: 10px;
+    border-radius: 20px;
     box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-    background: var(--primary);
+    background: white;
   }
 }
 @mixin webkitlarge {

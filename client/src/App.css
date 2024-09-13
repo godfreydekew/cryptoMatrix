@@ -4,7 +4,7 @@ body {
 
 .main_container{
   max-height: 100vh;
-  overflow-y: auto;
+  overflow-y: hidden;
   background-color: #1b2028;
   height: 100vh;
 }

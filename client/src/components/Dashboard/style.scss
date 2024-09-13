@@ -1,6 +1,4 @@
-@use '../../assets/index';
-@import '../../assets/colors';
-@import '../../assets/mixin';
+@use '../../assets/index' as *;
 
 .pd_db_wrapper {
   display: flex;
