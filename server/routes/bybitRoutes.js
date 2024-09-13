@@ -1,9 +1,11 @@
+//routes//bybitRoutes.js
 import express from 'express';
 import { fetchAllAssets, getTotalBalance, getAllTransactions } from '../controllers/bybitController.js';
 import { isAuthenticated } from '../middleware/auth.js'; 
 
 const router = express.Router();
 
+router.use(isAuthenticated);
 // Route to get total balance in USD
 router.get('/total_balance', getTotalBalance);
 

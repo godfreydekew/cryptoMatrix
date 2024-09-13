@@ -1,3 +1,4 @@
+//config/session.js
 import session from 'express-session';
 import MongoStore from 'connect-mongo';
 import mongoose from 'mongoose';
@@ -12,7 +13,7 @@ const sessionMiddleware = session({
     }),
     cookie: {
         maxAge: 1000 * 60 * 60 * 24, // 1 day
-        httpOnly: true,
+        httpOnly: false,//put true when you deploy
         secure: process.env.NODE_ENV === 'production' // secure: true in production (HTTPS)
     }
 });

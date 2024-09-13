@@ -1,3 +1,4 @@
+//middleware/auth.js
 const isAuthenticated = (req, res, next) => {
     if (req.session.userId) {
         next();

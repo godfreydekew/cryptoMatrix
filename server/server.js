@@ -1,3 +1,4 @@
+//server.js
 import express from 'express';
 import cors from 'cors';         // Import CORS for handling cross-origin requests
 import bodyParser from 'body-parser';  // Import body-parser for parsing JSON

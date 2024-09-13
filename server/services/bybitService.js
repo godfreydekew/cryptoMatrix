@@ -7,7 +7,7 @@
  * in the `config/bybit.js` file.
  */
 import axios from 'axios'; 
-import bybitClient from '../config/bybit.js';
+import createBybitClient from '../config/bybit.js'; 
 import getBalance from './allAssets.js';
 
 
@@ -21,7 +21,7 @@ const convertToUSD = async (coinSymbol, amount) => {
         return totalInUSD;
     } catch (error) {
         console.error(`Error converting ${coinSymbol} to USD:`, error);
-        return 0;  // Return 0 if the API call fails for some reason
+        throw error;  
     }
 };
 
@@ -62,14 +62,22 @@ const convertToUSD = async (coinSymbol, amount) => {
 
 //https://bybit-exchange.github.io/docs/v5/asset/withdraw/withdraw-record
 
-const getTransactions = async (startTime, endTime) => {
+const getTransactions = async (apiKey, secretKey, startTime, endTime) => {
     try {
+        
+        const bybitClient = createBybitClient(apiKey, secretKey);
+        // console.log(bybitClient)
         const response = await bybitClient.getWithdrawalRecords({
             withdrawType: 2, // Adjust as needed
             limit: 20,  // Adjust limit if needed
             startTime: startTime,
             endTime: endTime
         });
+
+        if (response.retMsg!== 'success') {
+            console.error('Error getting transactions:', response.retMsg);
+            throw new Error(response.retMsg);  // Throw an error with the retMsg for easier debugging.
+        }
         return response.result;
     } catch (error) {
         console.error('Error getting transactions:', error);
@@ -103,21 +111,21 @@ const getTransactions = async (startTime, endTime) => {
 
 
 // Helper function to get transactions for a specific date range
-const fetchTransactionsInRange = async (startDate, endDate) => {
+const fetchTransactionsInRange = async (apiKey, secretKey, startDate, endDate) => {
     if (!(startDate instanceof Date) || !(endDate instanceof Date)) {
         console.error('Invalid date object:', { startDate, endDate });
         throw new Error('Invalid date object');
     }
 
     try {
-        const result = await getTransactions(startDate.getTime(), endDate.getTime());
+        const result = await getTransactions(apiKey, secretKey, startDate.getTime(), endDate.getTime());
         return result.rows || [];
     } catch (error) {
         console.error(`Error fetching transactions from ${startDate} to ${endDate}:`, error);
         throw error;
     }
 };
-const fetchAllTransactions = async () => {
+const fetchAllTransactions = async (apiKey, secretKey) => {
     let allTransfers = [];
     const currentDate = new Date();
     const endDate = new Date(currentDate.getTime() - (24 * 60 * 60 * 1000)); // 1 day before current date
@@ -125,7 +133,7 @@ const fetchAllTransactions = async () => {
 
     for (let i = 0; i < 4; i++) {
         const rangeEndDate = new Date(startDate.getTime() + (25 * 24 * 60 * 60 * 1000) - (24 * 60 * 60 * 1000)); // End of range - 1 day
-        const transactions = await fetchTransactionsInRange(startDate, rangeEndDate);
+        const transactions = await fetchTransactionsInRange(apiKey, secretKey, startDate, rangeEndDate);
 
         // Convert withdrawal fee to USD and calculate duration concurrently
         const enhancedTransactions = await Promise.all(transactions.map(async (transaction) => {
@@ -158,9 +166,9 @@ const fetchAllTransactions = async () => {
     return allTransfers;
 };
 
-const getAllAssetsWithPrice = async () => {
+const getAllAssetsWithPrice = async (apiKey, secretKey) => {
     try {
-        const balances = await getBalance('FUND'); // Fetch all asset balances
+        const balances = await getBalance(apiKey, secretKey); // Fetch all asset balances
         const assetDetails = await Promise.all(balances.map(async (balance) => {
             const coin = balance.coin;
             const walletBalance = parseFloat(balance.walletBalance);
@@ -186,20 +194,20 @@ const getAllAssetsWithPrice = async () => {
         return assetDetails.filter(asset => asset !== null);
     } catch (error) {
         console.error('Error retrieving all assets with price:', error);
-        return [];
+        throw error;
     }
 };
 
 // Example usage of getAllAssetsWithPrice
-const getBalancesAndCalculateTotal = async () => {
+const getBalancesAndCalculateTotal = async (apiKey, secretKey) => {
     try {
-        const assets = await getAllAssetsWithPrice();
+        const assets = await getAllAssetsWithPrice(apiKey, secretKey);
         const totalUSD = assets.reduce((acc, asset) => acc + asset.amountInUSD, 0);
         console.log(`Total Balance in USD: $${totalUSD.toFixed(2)}`);
         return totalUSD;
     } catch (error) {
         console.error('Error displaying total balance:', error);
-        return -1;
+        throw error;
     }
 };
 
