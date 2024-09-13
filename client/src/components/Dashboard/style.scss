@@ -5,13 +5,50 @@
 .pd_db_wrapper {
   display: flex;
   background-color: #31353f;
+  max-height: 100vh;
+  height: 100vh;
+  p,
+  h4,
+  h3 {
+    margin: 0;
+    padding: 0;
+  }
 
   .db_top {
   }
   .pd_main_dashboard {
-    width: 100%;
+    width: calc(100%);
     padding: 32px;
+    height: 100dvh;
+    border: 1px solid blue;
+    overflow-y: scroll;
     .db_body {
+      height: 100%;
+      .top_part {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+
+        .coin_logo {
+          color: orange;
+          padding: 10px;
+          border-radius: 8px;
+          background-color: #31353f;
+          font-size: 20px;
+        }
+        .name_section {
+          .name {
+            font-size: 16px;
+            font-weight: 500;
+            color: white;
+          }
+          .abb {
+            color: $grey01;
+            font-size: 14px;
+            margin-top: 0.5rem;
+          }
+        }
+      }
       .db_row1 {
         display: flex;
         gap: 2%;
@@ -34,31 +71,7 @@
             margin: 0;
             padding: 0;
           }
-          .top_part {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
 
-            .coin_logo {
-              color: orange;
-              padding: 10px;
-              border-radius: 8px;
-              background-color: #31353f;
-              font-size: 20px;
-            }
-            .name_section {
-              .name {
-                font-size: 16px;
-                font-weight: 500;
-                color: white;
-              }
-              .abb {
-                color: $grey01;
-                font-size: 14px;
-                margin-top: 0.5rem;
-              }
-            }
-          }
           .bottom_part {
             margin-top: 24px;
             .price {
@@ -77,6 +90,104 @@
 
           &:hover {
             box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1); // Slight shadow on hover
+          }
+        }
+      }
+      .db_row2 {
+        margin-top: 24px;
+        .flex {
+          display: flex;
+          gap: 2%;
+        }
+        .left {
+          width: 30%;
+          display: flex;
+          flex-direction: column;
+          .credit_card {
+            background-color: $hover-color;
+            padding: 16px;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 3rem;
+            .top {
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              p {
+                color: #b5c7fa;
+                font-size: 16px;
+                line-height: 24px;
+                font-weight: bold;
+              }
+            }
+            .middle {
+              p {
+                color: white;
+                font-weight: bold;
+                font-size: 18px;
+              }
+            }
+            .bottom {
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              p {
+                color: #b5c7fa;
+                font-size: 16px;
+                line-height: 24px;
+                font-weight: bold;
+                &:last-child {
+                  color: white;
+                }
+              }
+            }
+          }
+          .potfolio {
+            background-color: $primary-color;
+            border-radius: 12px;
+            margin-top: 24px;
+            padding: 24px;
+            h4 {
+              font-size: 24px;
+              color: white;
+              margin: 0.5rem 0;
+            }
+            .single_row {
+              .flex {
+                display: flex;
+                justify-content: space-between;
+                margin: 1.5em 0;
+                .left {
+                  display: flex;
+                }
+                .right_side {
+                  text-align: end;
+                  p {
+                    color: $text-red;
+                    font-size: 16px;
+                    font-weight: bold;
+                    &:last-child {
+                      color: white !important;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+        .right {
+          width: 68%;
+          height: 100%;
+          background-color: $primary-color;
+          padding: 24px 0;
+          border-radius: 12px;
+          h3 {
+            color: white;
+            font-size: 24px;
+            color: white;
+            padding-bottom: 1rem;
+            padding-left: 1rem;
           }
         }
       }
