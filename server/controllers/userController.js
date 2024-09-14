@@ -5,13 +5,16 @@ import bcrypt from 'bcryptjs';
 // Signup controller
 const registerUser = async (req, res) => {
     
-    const { username, password, apiKey, secretKey } = req.body;
-
+    const { username, email, password, apiKey, secretKey } = req.body;
+    
     try {
         const userExists = await User.findOne({ username });
-        if (userExists) return res.status(400).json({ error: 'User already exists' });
+        const emailExists = await User.findOne({ email });
+        if (userExists || emailExists) return res.status(400).json({ error: 'Username or email already exists' });
 
-        const user = await User.create({ username, password, apiKey, secretKey });
+        if (!apiKey || !secretKey) return res.status(404).json({ error:  'API key or Secret key missing'});
+
+        const user = await User.create({ username, email, password, apiKey, secretKey });
 
         // Store user info in session after registration
         req.session.userId = user._id;
@@ -21,7 +24,8 @@ const registerUser = async (req, res) => {
         console.log('Session data:', req.session);
         res.status(201).json({ message: 'User registered successfully' });
     } catch (error) {
-        res.status(500).json({ error: 'Server error' });
+        console.error('Registration error:', error);
+        res.status(500).json({ error: 'User registered failed' });
     }
 };
 
@@ -30,10 +34,14 @@ const registerUser = async (req, res) => {
 const loginUser = async (req, res) => {
 
     console.log('Session data:', req.session);
-    const { username, password } = req.body;
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+        return res.status(400).json({ error: 'Username and password are required' });
+    }
 
     try {
-        const user = await User.findOne({ username });
+        const user = await User.findOne({ email });
         if (!user || !(await user.matchPassword(password))) {
             return res.status(401).json({ error: 'Invalid credentials' });
         }

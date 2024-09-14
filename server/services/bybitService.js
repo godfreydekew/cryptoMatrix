@@ -85,6 +85,26 @@ const getTransactions = async (apiKey, secretKey, startTime, endTime) => {
     } 
 };
 
+const getDepositRecords = async (apiKey, secretKey, startTime, endTime) => {
+    try {
+        const bybitClient = createBybitClient(apiKey, secretKey);
+        const response = await bybitClient.getDepositRecords({
+            coin: '',  // Adjust this if you want to filter by specific coin
+            startTime: startTime,
+            endTime: endTime,
+            limit: 20  // Adjust limit if needed
+        });
+
+        if (response.retMsg !== 'success') {
+            console.error('Error getting deposit records:', response.retMsg);
+            throw new Error(response.retMsg);  // Throw an error with the retMsg for easier debugging
+        }
+        return response.result;
+    } catch (error) {
+        console.error('Error getting deposit records:', error);
+        throw error;
+    }
+};
 
 // const fetchAllTransactions = async () => {
 //     let allTransfers = [];
@@ -125,46 +145,75 @@ const fetchTransactionsInRange = async (apiKey, secretKey, startDate, endDate) =
         throw error;
     }
 };
+
+
 const fetchAllTransactions = async (apiKey, secretKey) => {
-    let allTransfers = [];
-    const currentDate = new Date();
-    const endDate = new Date(currentDate.getTime() - (24 * 60 * 60 * 1000)); // 1 day before current date
-    let startDate = new Date(endDate.getTime() - (100 * 24 * 60 * 60 * 1000)); // 100 days before end date
+    try {
+        const currentDate = new Date();
+        const endDate = new Date(currentDate.getTime() - (5000)); // 1 day before current date
+        let startDate = new Date(endDate.getTime() - (100 * 24 * 60 * 60 * 1000)); // 100 days before end date
 
-    for (let i = 0; i < 4; i++) {
-        const rangeEndDate = new Date(startDate.getTime() + (25 * 24 * 60 * 60 * 1000) - (24 * 60 * 60 * 1000)); // End of range - 1 day
-        const transactions = await fetchTransactionsInRange(apiKey, secretKey, startDate, rangeEndDate);
+        let allWithdrawals = [];
+        let allDeposits = [];
 
-        // Convert withdrawal fee to USD and calculate duration concurrently
-        const enhancedTransactions = await Promise.all(transactions.map(async (transaction) => {
-            const coin = transaction.coin;
-            const withdrawFee = parseFloat(transaction.withdrawFee);
+        // Helper function to handle transaction enhancement
+        const enhanceTransactions = async (transactions, isWithdrawal) => {
+            return Promise.all(transactions.map(async (transaction) => {
+                const coin = transaction.coin;
+                const amount = parseFloat(transaction.amount);
+                const withdrawFee = isWithdrawal ? parseFloat(transaction.withdrawFee) : 0;
+                const totalInUSD = await convertToUSD(coin, amount);
+                const feeInUSD = isWithdrawal ? await convertToUSD(coin, withdrawFee) : 0;
 
-            // Convert withdraw fee to USD
-            const feeInUSD = await convertToUSD(coin, withdrawFee); // Use your convertToUSD function
+                // Calculate duration in seconds and minutes
+                const createTime = parseInt(transaction.createTime);
+                const updateTime = parseInt(transaction.updateTime);
+                const durationInSeconds = isWithdrawal ? (updateTime - createTime) / 1000 : 0;
+                const durationInMinutes = isWithdrawal ? durationInSeconds / 60 : 0;
 
-            // Calculate duration in seconds and minutes
-            const createTime = parseInt(transaction.createTime);
-            const updateTime = parseInt(transaction.updateTime);
-            const durationInSeconds = (updateTime - createTime) / 1000;
-            const durationInMinutes = durationInSeconds / 60;
+                return {
+                    ...transaction,
+                    totalInUSD,
+                    feeInUSD: isWithdrawal ? feeInUSD : undefined,
+                    durationInSeconds: isWithdrawal ? durationInSeconds : undefined,
+                    durationInMinutes: isWithdrawal ? durationInMinutes : undefined
+                };
+            }));
+        };
 
-            // Return the transaction with added attributes
-            return {
-                ...transaction,
-                feeInUSD,
-                durationInSeconds,
-                durationInMinutes
-            };
-        }));
+        for (let i = 0; i < 4; i++) {
+            const rangeEndDate = new Date(startDate.getTime() + (25 * 24 * 60 * 60 * 1000) - (24 * 60 * 60 * 1000)); // End of range - 1 day
 
-        allTransfers = allTransfers.concat(enhancedTransactions);
-        startDate = new Date(rangeEndDate.getTime() + (24 * 60 * 60 * 1000)); // Move to the next range
+            // Fetch withdrawal and deposit transactions in parallel
+            const [withdrawalTransactions, depositTransactions] = await Promise.all([
+                fetchTransactionsInRange(apiKey, secretKey, startDate, rangeEndDate),
+                getDepositRecords(apiKey, secretKey, startDate.getTime(), rangeEndDate.getTime())
+            ]);
+
+            // Enhance transactions in parallel
+            const [enhancedWithdrawalTransactions, enhancedDepositTransactions] = await Promise.all([
+                enhanceTransactions(withdrawalTransactions, true),
+                enhanceTransactions(depositTransactions.rows, false)
+            ]);
+
+            // Combine withdrawals and deposits
+            allWithdrawals = allWithdrawals.concat(enhancedWithdrawalTransactions);
+            allDeposits = allDeposits.concat(enhancedDepositTransactions);
+
+            // Move to the next range
+            startDate = new Date(rangeEndDate.getTime() + (24 * 60 * 60 * 1000));
+        }
+
+        return {
+            withdrawals: allWithdrawals,
+            deposits: allDeposits
+        };
+    } catch (error) {
+        console.error('Error fetching all transactions:', error);
+        throw error;
     }
-
-    // console.log(allTransfers);
-    return allTransfers;
 };
+
 
 const getAllAssetsWithPrice = async (apiKey, secretKey) => {
     try {
