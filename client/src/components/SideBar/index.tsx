@@ -39,8 +39,8 @@ const SideBar = () => {
         <div className="logo">
           <h2>cryptoMatrix</h2>
         </div>
-        {navLinks.map((item) => (
-          <div className="nav_flex" onClick={() => navigate(item.link)}>
+        {navLinks.map((item, i) => (
+          <div className="nav_flex" key={i} onClick={() => navigate(item.link)}>
             <div className="icon">{item.icon}</div>
             <p>{item.name}</p>
           </div>

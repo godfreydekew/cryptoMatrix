@@ -1,37 +1,55 @@
-import React, { useState, useEffect } from 'react';
-import { SiBitcoinsv } from 'react-icons/si';
-import TopMoversTable from '../Table/TopMovers';
+import React, { useState, useEffect } from 'react'
+import { SiBitcoinsv } from 'react-icons/si'
+import TopMoversTable from '../Table/TopMovers'
+import { BASE_URL } from '../../api/api'
+import { fetchTopMovers, fetchTotalBalance, fetchAssets } from '../../api/api'
+
+interface Coin {
+  name: string
+  symbol: string
+  image: string
+  current_price: number
+  price_change_percentage_24h: number
+}
+
+interface Balance {
+  totalBalanceInUSD: number
+  name: string
+}
+
+interface Asset {
+  coin: string
+  amountInUSD: number
+  priceInUSD: number
+  amount: number
+}
 
 const MainDashBoard = () => {
-  const [coins, setCoins] = useState([]);
-  const [balance, setBalance] = useState(null);
-  const [assets, setAssets] = useState([]);
+  const [coins, setCoins] = useState<Coin[]>([])
+  const [balance, setBalance] = useState<Balance | null>(null)
+  const [assets, setAssets] = useState<Asset[]>([])
 
   useEffect(() => {
-    // Fetch top movers data
-    fetch('http://13.60.197.156:3000/movers/top-movers')
-      .then(response => response.json())
-      .then(data => {
-        setCoins(data);
-      })
-      .catch(error => console.error('Error fetching top movers data:', error));
+    const fetchData = async () => {
+      try {
+        // Fetch top movers
+        const topMoversData = await fetchTopMovers()
+        setCoins(topMoversData)
 
-    // Fetch total balance data
-    fetch('http://localhost:5000/bybit/total_balance')
-      .then(response => response.json())
-      .then(data => {
-        setBalance(data);
-      })
-      .catch(error => console.error('Error fetching total balance data:', error));
+        // Fetch total balance
+        const balanceData = await fetchTotalBalance()
+        setBalance(balanceData)
 
-    // Fetch assets data
-    fetch('http://localhost:5000/bybit/assets')
-      .then(response => response.json())
-      .then(data => {
-        setAssets(data.assets);
-      })
-      .catch(error => console.error('Error fetching assets data:', error));
-  }, []);
+        // Fetch assets
+        const assetsData = await fetchAssets()
+        setAssets(assetsData)
+      } catch (error) {
+        console.error('Error fetching data:', error)
+      }
+    }
+
+    fetchData()
+  }, [])
 
   return (
     <div className="pd_main_dashboard">
@@ -42,7 +60,12 @@ const MainDashBoard = () => {
               <div className="top_part">
                 <div className="coin_logo">
                   {/* Use the coin image from the API */}
-                  <img src={coin.image} alt={`${coin.name} logo`} width="40" height="40" />
+                  <img
+                    src={coin.image}
+                    alt={`${coin.name} logo`}
+                    width="40"
+                    height="40"
+                  />
                 </div>
                 <div className="name_section">
                   <div className="text">
@@ -55,7 +78,12 @@ const MainDashBoard = () => {
                 {/* Display current price */}
                 <p className="price">${coin.current_price.toLocaleString()}</p>
                 {/* Display the 24h price change percentage */}
-                <p className={`trend ${coin.price_change_percentage_24h >= 0 ? 'positive' : 'negative'}`}>
+                <p
+                  className={`trend ${
+                    coin.price_change_percentage_24h >= 0
+                      ? 'positive'
+                      : 'negative'
+                  }`}>
                   {coin.price_change_percentage_24h.toFixed(2)}%
                 </p>
               </div>
@@ -71,7 +99,12 @@ const MainDashBoard = () => {
                   <p>Total Balance</p>
                 </div>
                 <div className="middle">
-                  <p>${balance ? balance.totalBalanceInUSD.toFixed(2) : 'Loading...'}</p>
+                  <p>
+                    $
+                    {balance
+                      ? balance.totalBalanceInUSD.toFixed(2)
+                      : 'Loading...'}
+                  </p>
                 </div>
                 <div className="bottom">
                   <p>{balance ? balance.name : 'Loading...'}</p>
@@ -90,13 +123,28 @@ const MainDashBoard = () => {
                         <div className="name_section">
                           <div className="text">
                             <p className="name">{asset.coin}</p>
-                            <p className="abb">{asset.amountInUSD.toFixed(2)} USD</p>
+                            <p className="abb">
+                              {asset.amountInUSD !== undefined
+                                ? asset.amountInUSD.toFixed(2)
+                                : 'N/A'}{' '}
+                              USD
+                            </p>
                           </div>
                         </div>
                       </div>
                       <div className="right_side">
-                        <p>{asset.priceInUSD.toFixed(2)} USD</p>
-                        <p>{asset.amount.toFixed(4)} {asset.coin}</p>
+                        <p>
+                          {asset.priceInUSD !== undefined
+                            ? asset.priceInUSD.toFixed(2)
+                            : 'N/A'}{' '}
+                          USD
+                        </p>
+                        <p>
+                          {asset.amount !== undefined
+                            ? asset.amount.toFixed(4)
+                            : 'N/A'}{' '}
+                          {asset.coin}
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -111,7 +159,7 @@ const MainDashBoard = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default MainDashBoard;
+export default MainDashBoard

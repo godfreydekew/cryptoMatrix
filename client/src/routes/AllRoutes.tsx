@@ -27,24 +27,29 @@ const AllRoutes = () => {
           <Route
             path="/dashboard"
             element={
-              <ProtectedRoute>
-                <LayoutWrapper element={<DashBoard />} />
-              </ProtectedRoute>
+              // <ProtectedRoute>
+              <LayoutWrapper element={<DashBoard />} />
+              // </ProtectedRoute>
             }
           />
           <Route
             path="/dashboard/transactions"
             element={
-              <ProtectedRoute>
-                <LayoutWrapper element={<TransactionsPage />} />
-              </ProtectedRoute>
+              // <ProtectedRoute>
+              <LayoutWrapper element={<TransactionsPage />} />
+              // </ProtectedRoute>
             }
           />
 
-          <Route path="/news"  element={<LayoutWrapper element={< NewsPage/>} />} />
-          <Route path="/chart"  element={<LayoutWrapper element={< ChartsPage/>} />} />
+          <Route
+            path="/news"
+            element={<LayoutWrapper element={<NewsPage />} />}
+          />
+          <Route
+            path="/chart"
+            element={<LayoutWrapper element={<ChartsPage />} />}
+          />
         </Routes>
-
       </AuthProvider>
     </Router>
   )
