@@ -5,6 +5,8 @@ import DashBoard from '../components/Dashboard'
 import BybitApiSync from '../components/bybitConnect'
 import TransactionsPage from '../components/Transactions'
 import Layout from '../components/Layout'
+import { AuthProvider } from '../store/AuthProvider' // Import AuthProvider
+import ProtectedRoute from '../store/ProtectedRoute' // Import ProtectedRoute
 
 const LayoutWrapper = ({ element }: any) => {
   return <Layout>{element}</Layout>
@@ -13,21 +15,31 @@ const LayoutWrapper = ({ element }: any) => {
 const AllRoutes = () => {
   return (
     <Router>
-      <Routes>
-        {/* Route for LandingPage without Layout */}
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/connect" element={<BybitApiSync />} />
+      <AuthProvider>
+        <Routes>
+          {/* Public Routes */}
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/connect" element={<BybitApiSync />} />
 
-        {/* Layout wrapper for other routes */}
-        <Route
-          path="/dashboard"
-          element={<LayoutWrapper element={<DashBoard />} />}
-        />
-        <Route
-          path="/dashboard/transactions"
-          element={<LayoutWrapper element={<TransactionsPage />} />}
-        />
-      </Routes>
+          {/* Protected Routes */}
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <LayoutWrapper element={<DashBoard />} />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/dashboard/transactions"
+            element={
+              <ProtectedRoute>
+                <LayoutWrapper element={<TransactionsPage />} />
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
+      </AuthProvider>
     </Router>
   )
 }

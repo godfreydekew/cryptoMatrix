@@ -1,18 +1,34 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import './style.scss'
 import CustomInput from '../customInput/CustomInput'
 import { useForm, FieldValues } from 'react-hook-form'
 import { Button } from '@mui/material'
-
+import { registerUser } from '../../api/api'
 const BybitApiSync: React.FC = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<FieldValues>()
+  const navigate = useNavigate()
 
-  const onSubmit = (data: FieldValues) => {
+  const onSubmit = async (data: FieldValues) => {
     console.log(data) // Access the form data here
+
+    try {
+      const response = await registerUser(
+        data.name,
+        data.email,
+        data.password,
+        data.api_key,
+        data.api_secret,
+      )
+      alert(`Registration successful:, ${response}`)
+      navigate('/dashboard')
+    } catch (error) {
+      console.error('Registration failed:', error)
+    }
   }
 
   return (
@@ -30,12 +46,40 @@ const BybitApiSync: React.FC = () => {
 
           <form className="form" onSubmit={handleSubmit(onSubmit)}>
             <div className="input-group">
-              {/* <label htmlFor="apiKey">API Key</label>
-              <input type="text" id="apiKey" placeholder="Enter here" /> */}
+              <CustomInput
+                label="Name"
+                type="text"
+                name="name"
+                register={register}
+                required="Name is required"
+                errors={errors}
+              />
+            </div>
+            <div className="input-group">
+              <CustomInput
+                label="Email"
+                type="email"
+                name="email"
+                register={register}
+                required="Email is required"
+                errors={errors}
+              />
+            </div>
+            <div className="input-group">
+              <CustomInput
+                label="Password"
+                type="password"
+                name="password"
+                register={register}
+                required="Password is required"
+                errors={errors}
+              />
+            </div>
+            <div className="input-group">
               <CustomInput
                 label="API Key"
                 type="text"
-                name="api-key"
+                name="api_key"
                 register={register}
                 required="API Key is required"
                 errors={errors}
@@ -49,7 +93,7 @@ const BybitApiSync: React.FC = () => {
               <CustomInput
                 label="API Secret"
                 type="password"
-                name="api-secret"
+                name="api_secret"
                 register={register}
                 required="Secret key is required"
                 errors={errors}
