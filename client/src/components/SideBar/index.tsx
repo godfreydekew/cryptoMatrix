@@ -7,6 +7,7 @@ import { GrTransaction } from 'react-icons/gr'
 import { RiNewsLine } from 'react-icons/ri'
 import { BiLogOut } from 'react-icons/bi'
 import { useNavigate } from 'react-router-dom'
+import { logout } from '../../api/api'
 
 const SideBar = () => {
   const navigate = useNavigate()
@@ -22,6 +23,16 @@ const SideBar = () => {
     { name: 'Wallet', icon: <IoWalletOutline />, link: '/dashboard' },
     { name: 'News', icon: <RiNewsLine />, link: '/dashboard' },
   ]
+  const handleLogout = async () => {
+    try {
+      const response = await logout()
+      navigate('/')
+      console.log('Logout successful:', response)
+      // Optionally redirect or show a message after successful logout
+    } catch (error) {
+      console.error('Logout failed:', error)
+    }
+  }
   return (
     <div className="pd_sidebar_wrapper">
       <div className="inner_wrap">
@@ -34,7 +45,7 @@ const SideBar = () => {
             <p>{item.name}</p>
           </div>
         ))}
-        <div className="nav_flex bottom">
+        <div className="nav_flex bottom" onClick={handleLogout}>
           <div className="icon">
             <BiLogOut />
           </div>
