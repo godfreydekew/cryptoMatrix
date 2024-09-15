@@ -5,6 +5,8 @@ import DashBoard from '../components/Dashboard'
 import BybitApiSync from '../components/bybitConnect'
 import TransactionsPage from '../components/Transactions'
 import Layout from '../components/Layout'
+import NewsPage from '../components/News'
+import ChartsPage from '../components/Chart'
 import { AuthProvider } from '../store/AuthProvider' // Import AuthProvider
 import ProtectedRoute from '../store/ProtectedRoute' // Import ProtectedRoute
 
@@ -38,7 +40,11 @@ const AllRoutes = () => {
               </ProtectedRoute>
             }
           />
+
+          <Route path="/news"  element={<LayoutWrapper element={< NewsPage/>} />} />
+          <Route path="/chart"  element={<LayoutWrapper element={< ChartsPage/>} />} />
         </Routes>
+
       </AuthProvider>
     </Router>
   )
