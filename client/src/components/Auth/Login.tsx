@@ -19,9 +19,9 @@ const LoginForm: React.FC = () => {
     try {
       const response = await loginUser(data.email, data.password)
       alert(`Successful, ${response}`)
+      console.log(response)
 
-      // Assuming the response contains a token, pass it to the login function
-      login(response.token)
+      navigate('/dashboard')
     } catch (error) {
       console.error('Login failed:', error)
     }
