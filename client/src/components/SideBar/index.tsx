@@ -14,14 +14,14 @@ const SideBar = () => {
 
   const navLinks = [
     { name: 'Overview', icon: <CgMenuGridR />, link: '/dashboard' },
-    { name: 'Chart', icon: <IoPieChartOutline />, link: '/dashboard' },
+    { name: 'Chart', icon: <IoPieChartOutline />, link: '/chart' },
     {
       name: 'Transactions',
       icon: <GrTransaction />,
       link: '/dashboard/transactions',
     },
     { name: 'Wallet', icon: <IoWalletOutline />, link: '/dashboard' },
-    { name: 'News', icon: <RiNewsLine />, link: '/dashboard' },
+    { name: 'News', icon: <RiNewsLine />, link: '/news' },
   ]
   const handleLogout = async () => {
     try {
