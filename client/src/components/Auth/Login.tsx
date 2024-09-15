@@ -1,8 +1,10 @@
-// LoginForm.tsx
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useForm, FieldValues } from 'react-hook-form'
 import CustomInput from '../customInput/CustomInput'
 import { Button } from '@mui/material'
+import { loginUser } from '../../api/api'
+import { useAuth } from '../../store/AuthProvider' // Import the auth context
 
 const LoginForm: React.FC = () => {
   const {
@@ -10,15 +12,24 @@ const LoginForm: React.FC = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<FieldValues>()
+  const { login } = useAuth() // Get login function from context
+  const navigate = useNavigate()
 
-  const onSubmit = (data: FieldValues) => {
-    console.log(data) // Access the form data here
+  const onSubmit = async (data: FieldValues) => {
+    try {
+      const response = await loginUser(data.email, data.password)
+      alert(`Successful, ${response}`)
+
+      // Assuming the response contains a token, pass it to the login function
+      login(response.token)
+    } catch (error) {
+      console.error('Login failed:', error)
+    }
   }
 
   return (
     <div className="login-container">
       <form onSubmit={handleSubmit(onSubmit)}>
-        {/* CustomInput for Email */}
         <CustomInput
           label="Email"
           type="email"
@@ -28,8 +39,6 @@ const LoginForm: React.FC = () => {
           errors={errors}
           inputClass="login-short"
         />
-
-        {/* CustomInput for Password */}
         <CustomInput
           label="Password"
           type="password"
@@ -39,8 +48,6 @@ const LoginForm: React.FC = () => {
           errors={errors}
           inputClass="login-short"
         />
-
-        {/* Submit Button */}
         <Button type="submit" variant="contained">
           Login
         </Button>
