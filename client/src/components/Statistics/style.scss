@@ -1,0 +1,30 @@
+@use '../../assets/index' as *;
+.statistics-card {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin: 10px;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    
+    .icon {
+      font-size: 24px;
+      margin-right: 10px;
+    }
+    
+    .details {
+      .title {
+        font-size: 14px;
+        color: #666;
+      }
+      
+      .value {
+        font-size: 18px;
+        font-weight: bold;
+        color: #333;
+      }
+    }
+  }
+  
