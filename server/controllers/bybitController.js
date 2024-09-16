@@ -6,6 +6,7 @@ import { getAllAssetsWithPrice, getBalancesAndCalculateTotal, fetchAllTransactio
 const getTotalBalance = async (req, res) => {
 
     try {
+        console.log('getTotalBalance session', req.session);
         const { apiKey, secretKey } = req.session;
         console.log(apiKey);
         if (!apiKey || !secretKey) {
