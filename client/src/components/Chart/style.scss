@@ -1,31 +1,61 @@
 @use '../../assets/index' as *;
+
 .charts-page {
-    padding: 20px;
-    background-color: rgba(0, 0, 0, 1);
-    color: white;
-  
-    h1 {
-      font-size: 28px;
-      margin-bottom: 20px;
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 1);
+  color: white;
+
+  h1 {
+    font-size: 28px;
+    margin-bottom: 20px;
+  }
+
+  .selector {
+    margin-bottom: 20px;
+
+    label {
+      font-size: 18px;
+      margin-right: 10px;
     }
-  
-    .selector {
-      margin-bottom: 20px;
-  
-      label {
-        font-size: 18px;
-        margin-right: 10px;
-      }
-  
-      select {
-        padding: 5px;
-        font-size: 16px;
-      }
-    }
-  
-    .chart-container {
-      width: 100%;
-      height: 840px; // Adjust height as needed
+
+    select {
+      padding: 5px;
+      font-size: 16px;
     }
   }
-  
+
+  .chart-container {
+    width: 100%;
+    height: 940px; // Adjust height as needed
+  }
+
+  // New loading styles
+  .loading-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 940px; // Match the height of chart-container
+    background-color: rgba(0, 0, 0, 1); // Match the background of charts-page
+
+    .loader {
+      border: 7px solid #333; // Darker color for the outer circle
+      border-top: 5px solid #fff; // White color for the spinning part
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      animation: spin 1s linear infinite;
+    }
+
+    p {
+      margin-top: 20px;
+      color: #ffffff;
+      font-size: 18px;
+    }
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+}

@@ -1,5 +1,6 @@
 //middleware/auth.js
 const isAuthenticated = (req, res, next) => {
+    console.log('inside auth', req.session);
     if (req.session.userId) {
         next();
     } else {

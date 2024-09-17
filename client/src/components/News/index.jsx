@@ -5,7 +5,7 @@ const NewsPage = () => {
   const [newsData, setNewsData] = useState([]);
 
   useEffect(() => {
-    fetch("http://13.60.197.156:3000/movers/crypto-news")
+    fetch("http://localhost:4000/movers/crypto-news")
       .then((response) => response.json())
       .then((data) => setNewsData(data.news))
       .catch((error) => console.error("Error fetching news:", error));

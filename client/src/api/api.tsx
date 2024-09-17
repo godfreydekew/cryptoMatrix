@@ -1,8 +1,10 @@
 // src/api/api.js
 import axios from 'axios'
 
-export const BASE_URL = 'http://13.60.197.156:3000'
-// export const BASE_URL = 'http://localhost:4000'
+export const BASE_URL = 'http://localhost:4000'
+// export const BASE_URL = 'http://13.60.197.156:3000';
+axios.defaults.withCredentials = true;
+// axios.defaults.baseURL = BASE_URL;
 
 export const registerUser = async (
   username: string,
@@ -20,8 +22,10 @@ export const registerUser = async (
       secretKey,
     }
 
-    const response = await axios.post(`${BASE_URL}/user/register`, payload)
-    return response.data // handle the response accordingly
+    const response = await axios.post(`${BASE_URL}/user/register`, payload, {
+      withCredentials: true,
+    });
+    return response.data; // handle the response accordingly
   } catch (error) {
     console.error('Error during registration:', error)
     throw error // rethrow the error to handle it in the calling component
@@ -35,8 +39,10 @@ export const loginUser = async (email: string, password: string) => {
       password,
     }
 
-    const response = await axios.post(`${BASE_URL}/user/login`, payload)
-    return response.data // handle the response accordingly
+    const response = await axios.post(`${BASE_URL}/user/login`, payload, {
+      withCredentials: true,
+    });
+    return response.data; // handle the response accordingly
   } catch (error) {
     console.error('Error during registration:', error)
     throw error // rethrow the error to handle it in the calling component
@@ -45,8 +51,10 @@ export const loginUser = async (email: string, password: string) => {
 
 export const logout = async () => {
   try {
-    const response = await axios.post(`${BASE_URL}/user/logout`)
-    return response.data // handle the response accordingly
+    const response = await axios.post(`${BASE_URL}/user/logout`, {}, {
+      withCredentials: true,
+    })
+    return response.data ;// handle the response accordingly
   } catch (error) {
     console.error('Error during logout:', error)
     throw error // rethrow the error to handle it in the calling component
@@ -56,19 +64,25 @@ export const logout = async () => {
 // Fetch top movers
 export const fetchTopMovers = async () => {
   try {
-    const response = await axios.get(`${BASE_URL}/movers/top-movers`)
-    return response.data
+    const response = await axios.get(`${BASE_URL}/movers/top-movers`, {
+      withCredentials: true,
+    })
+    return response.data;
   } catch (error) {
     console.error('Error fetching top movers data:', error)
-    throw error
+    throw error;
   }
 }
 
 // Fetch total balance
 export const fetchTotalBalance = async () => {
   try {
-    const response = await axios.get(`${BASE_URL}/bybit/total_balance`)
-    return response.data
+    console.log("balance");
+    const response = await axios.get(`${BASE_URL}/bybit/total_balance`, {
+      withCredentials: true,
+    });
+    
+    return response.data;
   } catch (error) {
     console.error('Error fetching total balance data:', error)
     throw error
@@ -78,10 +92,13 @@ export const fetchTotalBalance = async () => {
 // Fetch assets
 export const fetchAssets = async () => {
   try {
-    const response = await axios.get(`${BASE_URL}/bybit/assets`)
-    return response.data.assets
+    console.log("ASSETS");
+    const response = await axios.get(`${BASE_URL}/bybit/assets`, {
+      withCredentials: true,
+    })
+    return response.data.assets;
   } catch (error) {
-    console.error('Error fetching assets data:', error)
-    throw error
+    console.error('Error fetching assets data:', error);
+    throw error;
   }
 }

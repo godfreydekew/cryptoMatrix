@@ -16,12 +16,13 @@ const registerUser = async (req, res) => {
 
         const user = await User.create({ username, email, password, apiKey, secretKey });
 
+        console.log('Befor logging in', req.session)
         // Store user info in session after registration
         req.session.userId = user._id;
         req.session.username = user.username;
         req.session.apiKey = user.apiKey;  // Store API key in session
         req.session.secretKey = user.secretKey;  // Store Secret key in session
-        console.log('Session data:', req.session);
+        // console.log('Session data:', req.session);
         res.status(201).json({ message: 'User registered successfully' });
     } catch (error) {
         console.error('Registration error:', error);
@@ -33,7 +34,7 @@ const registerUser = async (req, res) => {
 // Login controller
 const loginUser = async (req, res) => {
 
-    console.log('Session data:', req.session);
+    console.log('login Session data:', req.session);
     const { email, password } = req.body;
 
     if (!email || !password) {
@@ -51,8 +52,9 @@ const loginUser = async (req, res) => {
         req.session.username = user.username;
         req.session.apiKey = user.apiKey;  // Store API key in session
         req.session.secretKey = user.secretKey;  // Store Secret key in session
+        console.log('Session data:', req.session);
 
-        res.json({ message: 'Logged in successfully', user: { id: user._id, username: user.username } });
+        res.json({ message: 'Logged in successfully'});
     } catch (error) {
         res.status(500).json({ error: 'Server error' });
     }
