@@ -34,6 +34,7 @@ const MainDashBoard = () => {
       try {
         // Fetch top movers
         const topMoversData = await fetchTopMovers()
+        console.log(topMoversData);
         setCoins(topMoversData)
 
         // Fetch total balance
