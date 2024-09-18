@@ -73,36 +73,11 @@ const Navbar: React.FC = () => {
           </div>
         </CustomModal>
       )}
-      {/* <nav className={`navbar ${isMobileMenuOpen ? 'scrolled' : ''}`}>
-        <div className="navbar-container">
-          <div className="logo">CryptoMatrix</div>
-          <div className="menu-icon" onClick={handleMenuToggle}>
-            {isMobileMenuOpen ? <FaTimes /> : <FaBars />}
-          </div>
-          <ul className={`nav-links ${isMobileMenuOpen ? 'active' : ''}`}>
-            <li>
-              <a href="/#about-us">About Us</a>
-            </li>
-            <li>
-              <a href="/#features">Features</a>
-            </li>
-            <li>
-              <a href="#">Contact</a>
-            </li>
-          </ul>
-          <div className="auth-buttons">
-            <button className="sign-in" onClick={() => setOpenModal(true)}>
-              Log In
-            </button>
-            <button className="sign-up">
-              <a href="/connect">Sign Up</a>
-            </button>
-          </div>
-        </div>
-      </nav> */}
       <nav className={`navbar ${isMobileMenuOpen ? 'scrolled' : ''}`}>
         <div className="navbar-container">
-          <div className="logo">CryptoMatrix</div>
+          <div className="logo">
+            Crypto<span>Matrix</span>
+          </div>
           <ul className="nav-links">
             <li>
               <a href="/#about-us">About Us</a>

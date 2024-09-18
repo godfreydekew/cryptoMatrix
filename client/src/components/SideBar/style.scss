@@ -40,6 +40,10 @@
       .icon {
         font-size: 24px;
       }
+      &.active {
+        background-color: $hover-color;
+        color: white;
+      }
 
       &:hover {
         background-color: $hover-color;
