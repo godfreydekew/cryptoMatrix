@@ -35,7 +35,7 @@ const MainDashBoard = () => {
       try {
         // Fetch top movers
         const topMoversData = await fetchTopMovers()
-        console.log(topMoversData);
+        console.log(topMoversData)
         setCoins(topMoversData)
 
         // Fetch total balance
@@ -92,7 +92,6 @@ const MainDashBoard = () => {
             </div>
           ))}
         </div>
-
         <div className="db_row2">
           <div className="flex">
             <div className="left">

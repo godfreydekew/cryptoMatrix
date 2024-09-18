@@ -1,21 +1,25 @@
-import React, { useEffect, useState } from "react";
-import "./style.scss";
+import React, { useEffect, useState } from 'react'
+import './style.scss'
 
 const NewsPage = () => {
-  const [newsData, setNewsData] = useState([]);
+  const [newsData, setNewsData] = useState([])
 
   useEffect(() => {
-    fetch("http://localhost:4000/movers/crypto-news")
+    fetch('http://localhost:4000/movers/crypto-news')
       .then((response) => response.json())
       .then((data) => setNewsData(data.news))
-      .catch((error) => console.error("Error fetching news:", error));
-  }, []);
+      .catch((error) => console.error('Error fetching news:', error))
+  }, [])
 
   const formatDate = (timestamp) => {
-    const date = new Date(timestamp * 1000);
-    return date.toLocaleDateString() + " " + date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }); 
-  };
-  
+    const date = new Date(timestamp * 1000)
+    return (
+      date.toLocaleDateString() +
+      ' ' +
+      date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+    )
+  }
+
   return (
     <div className="crypto-news-page">
       <header className="header">
@@ -35,30 +39,29 @@ const NewsPage = () => {
                 </a>
               </h2>
               <p className="news-description">
-                  {news.description.length > 100 
-                    ? news.description.substring(0, 200) + "..." 
-                    : news.description}
-                </p>
-                <div className="news-footer">
+                {news.description.length > 100
+                  ? news.description.substring(0, 110) + '...'
+                  : news.description}
+              </p>
+              <div className="news-footer">
                 <span className="news-date">{formatDate(news.updated_at)}</span>
-               
+
                 <a
                   href={news.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="view-more"
-                >
+                  className="view-more">
                   View More
                 </a>
               </div>
               <br />
-               <span className="news-author">By {news.author || "Unknown"}</span>
+              <span className="news-author">By {news.author || 'Unknown'}</span>
             </div>
           </div>
         ))}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default NewsPage;
+export default NewsPage

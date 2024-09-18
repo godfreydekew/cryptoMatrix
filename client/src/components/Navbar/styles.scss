@@ -1,0 +1,20 @@
+@use '../../assets/index' as *;
+
+.navbar-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: $primary-color;
+  padding: 1rem;
+
+  .logo {
+    color: $hover-color;
+    font-size: 24px;
+  }
+
+  .menu-icon {
+    cursor: pointer;
+    color: $hover-color;
+    font-size: 24px;
+  }
+}

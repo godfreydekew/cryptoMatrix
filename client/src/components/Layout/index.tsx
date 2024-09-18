@@ -1,20 +1,21 @@
 import React from 'react'
 import Sidebar from '../SideBar/index' // Make sure to import your Sidebar component
 import Navbar from '../Navbar'
+import './layout.scss'
+// import InnerNav from '../Navbar/InnerNav'
 
 const Layout = ({ children }: any) => {
   return (
-    <div style={{ display: 'flex' }}>
+    <div style={{ display: 'flex' }} className="layout">
       {/* Sidebar Section */}
       <Sidebar />
 
       {/* Main Content Area */}
       <div style={{ flex: 1 }}>
-        {/* Navbar */}
-        {/* <Navbar /> */}
+        {/* <InnerNav /> */}
 
         {/* Page Content */}
-        <div style={{ padding: '20px' }}>{children}</div>
+        <div>{children}</div>
       </div>
     </div>
   )
