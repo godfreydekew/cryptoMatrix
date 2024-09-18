@@ -2,7 +2,31 @@
 @import '../../assets/colors';
 @import '../../assets/mixin';
 
-.table_row {
-  color: white;
+.chart-layout {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+
+  .chart-wrapper {
+    flex: 1; /* Chart takes up full available space */
+    position: relative; /* Required for absolute positioning of labels */
+  }
+
+  .data-labels {
+    flex: 0 0 auto; /* Labels don't have fixed width, adjust as needed */
+    padding-left: 20px;
+    color: white; /* Adjust color as needed */
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+  }
+
+  .label-position {
+    position: absolute; /* Absolute positioning within the chart-wrapper */
+    top: 50%; /* Center labels vertically */
+    transform: translateY(-50%); /* Adjust vertical centering */
+    right: 50px; /* Adjust horizontal spacing (50px in this case) */
+  }
 }
-/* src/components/YourChartComponent.css */

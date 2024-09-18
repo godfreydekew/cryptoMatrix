@@ -1,0 +1,117 @@
+@use '../../assets/index' as *;
+
+// Chatbot Container
+.fixed {
+  position: fixed;
+  bottom: 1rem; // Spacing from the bottom of the viewport
+  right: 1rem; // Spacing from the right of the viewport
+  z-index: 50; // To ensure the chatbot appears on top of other elements
+
+
+// Chatbot Toggle Button
+button {
+  background-color: #FFD700; // Gold button color
+  &:hover {
+    background-color: #FFC107; // Darker gold on hover
+    transform: scale(1.05); // Hover scaling effect
+    transition: transform 0.3s ease-in-out; // Smooth transition effect
+  }
+  color: #FFFFFF; // White icon inside the button
+  border-radius: 50%; // Round button
+  padding: 1rem; // Padding around the icon
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); // Slight shadow
+  transition: all 0.3s ease-in-out; // Smooth transition on hover
+}
+
+// Chatbot Opened Card
+.bg-white {
+  background-color: #FFFFFF; // White background for the chatbot when expanded
+  border-radius: 1rem; // Rounded corners for the chatbot card
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1); // Drop shadow for depth
+  width: 30rem; // Fixed width
+  height: 34rem; // Fixed height
+  display: flex;
+  flex-direction: column; // Stack the content vertically
+  transition: all 0.3s ease-in-out; // Smooth transition for expansion/collapse
+  transform: scale(1); // Start with a regular scale
+}
+
+// Header
+.bg-yellow-500 {
+  background-color: #FFD700; // Gold background for the header
+  padding: 1rem; // Padding inside the header
+  border-radius: 1rem 1rem 0 0; // Rounded corners at the top
+  display: flex;
+  justify-content: space-between; // Align header items (title and close button)
+  align-items: center; // Center items vertically
+  font-weight: bold; // Bold header text
+  color: #FFFFFF; // White text in the header
+}
+
+// Close Button
+button {
+  &:hover {
+    color: #E0E0E0; // Light gray when hovering over the close button
+  }
+}
+
+// Messages Area
+.flex-grow {
+  flex-grow: 1; // Make the chat area expand to take available space
+  overflow-y: auto; // Scroll if messages exceed the container height
+  padding: 1rem; // Padding around the messages
+}
+
+// Messages
+.text-right {
+  text-align: right; // Align user messages to the right
+}
+.text-left {
+  text-align: left; // Align bot messages to the left
+}
+.mb-2 {
+  margin-bottom: 0.5rem; // Space between messages
+}
+span {
+  display: inline-block; // Display messages as inline-blocks
+  padding: 0.5rem; // Padding inside message bubbles
+  border-radius: 0.5rem; // Rounded message bubbles
+  background-color: #F5F5F5; // Light gray background for bot messages
+
+  &.bg-yellow-100 {
+    background-color: #FFF9C4; // Light gold background for user messages
+  }
+}
+
+// Loading State
+.text-center {
+  text-align: center;
+}
+.text-gray-500 {
+  color: #9E9E9E; // Gray color for "Thinking..." text
+}
+
+// Input Field
+input {
+  width: 100%; // Full width input
+  padding: 0.5rem; // Padding inside the input
+  border: 1px solid #E0E0E0; // Light gray border
+  border-radius: 0.5rem; // Rounded corners for the input
+  transition: border 0.3s ease-in-out; // Smooth transition for focus state
+
+  &:focus {
+    outline: none; // Remove default outline on focus
+    border-color: #FFD700; // Gold border on focus
+  }
+
+  &:disabled {
+    background-color: #F5F5F5; // Light gray background when disabled
+    cursor: not-allowed; // Not-allowed cursor when disabled
+  }
+}
+
+// Border between message area and input field
+.border-t {
+  border-top: 1px solid #E0E0E0; // Light gray border separating message area from input
+}
+}

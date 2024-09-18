@@ -150,7 +150,7 @@ const fetchTransactionsInRange = async (apiKey, secretKey, startDate, endDate) =
 const fetchAllTransactions = async (apiKey, secretKey) => {
     try {
         const currentDate = new Date();
-        const endDate = new Date(currentDate.getTime() - (5000)); // 1 day before current date
+        const endDate = new Date(currentDate.getTime() - 1); // 1 day before current date
         let startDate = new Date(endDate.getTime() - (100 * 24 * 60 * 60 * 1000)); // 100 days before end date
 
         let allWithdrawals = [];

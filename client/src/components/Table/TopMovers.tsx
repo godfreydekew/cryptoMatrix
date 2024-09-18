@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react'
-import { Doughnut } from 'react-chartjs-2'
-import { Chart as ChartJS, Title, Tooltip, Legend, ArcElement } from 'chart.js'
+import { Bar } from 'react-chartjs-2'
+import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js'
 import axios from 'axios'
-import { FaBitcoin } from 'react-icons/fa'
-import ChartDataLabels from 'chartjs-plugin-datalabels'
 import { BASE_URL } from '../../api/api'
+import './style.scss'
 
 // Register Chart.js components
-ChartJS.register(Title, Tooltip, Legend, ArcElement, ChartDataLabels)
+ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
 
 // Define the color map for the coins
 const coinColors: { [key: string]: string } = {
   BTC: '#f69c3d',
+  TRX: 'red',
   ETH: '#497493',
   VTC: '#205b30',
   DASH: '#1376b5',
@@ -45,10 +45,12 @@ interface ChartData {
     data: number[]
     backgroundColor: string[]
     hoverOffset: number
+    borderRadius: number // Added for rounded corners
+    barPercentage: number // To control the width of bars
   }[]
 }
 
-const YourChartComponent: React.FC = () => {
+const YourBarChartComponent: React.FC = () => {
   const [chartData, setChartData] = useState<ChartData | null>(null)
 
   useEffect(() => {
@@ -74,7 +76,9 @@ const YourChartComponent: React.FC = () => {
             {
               data: amountsInUSD,
               backgroundColor: backgroundColor,
-              hoverOffset: 100,
+              hoverOffset: 10, // Smaller hover offset for bar charts
+              borderRadius: 40, // Rounded corners for the bars
+              barPercentage: 0.5, // Controls the bar width
             },
           ],
         })
@@ -86,8 +90,6 @@ const YourChartComponent: React.FC = () => {
 
   const options = {
     responsive: true,
-    cutout: '70%',
-    radius: '50%',
     plugins: {
       tooltip: {
         callbacks: {
@@ -98,34 +100,56 @@ const YourChartComponent: React.FC = () => {
           },
         },
         backgroundColor: 'rgba(0, 0, 0, 0.7)', // Tooltip background color
-        titleFont: { family: 'Arial', size: 14, weight: 'bold' }, // Customize tooltip title font
-        bodyFont: { size: 25 }, // Customize tooltip body font
+        titleFont: { family: 'Arial', size: 20, weight: 'bold' }, // Customize tooltip title font
+        bodyFont: { size: 20 }, // Customize tooltip body font
         padding: 10,
       },
       legend: {
-        position: 'top' as const,
+        display: false, // No need for a legend in this case
       },
-      datalabels: {
-        color: 'black', // Text color
-        formatter: (value: number, context: any) => {
-          return context.chart.data.labels[context.dataIndex] // Show the label (e.g., BTC, LTC)
+    },
+    scales: {
+      x: {
+        title: {
+          display: true,
+          text: 'Coin',
+          color: 'white',
+          font: {
+            size: 20,
+            weight: 'bold',
+          },
         },
-        font: {
-          weight: 'bold', // Bold text
+        ticks: {
+          color: 'white',
+          weight: 'bold', // Change x-axis tick label color
+          font: {
+            size: 13, // Change x-axis tick label font size
+          },
         },
-        anchor: 'center' as const, // Position the text in the center of the arc
-        align: 'center' as const, // Center the text within the arc
       },
-      animation: {
-        animateRotate: true,
-        animateScale: true,
-        duration: 2000,
+      y: {
+        title: {
+          display: true,
+          text: 'Amount (USD)',
+          color: 'white',
+          font: {
+            size: 20,
+            weight: 'bold',
+          },
+        },
+        beginAtZero: true, // Ensure the y-axis starts at 0
+        ticks: {
+          callback: (value: any) => `$${value}`, // Add $ symbol to y-axis values
+          color: 'white', // Change y-axis tick label color
+          font: {
+            size: 15, // Change y-axis tick label fo
+          },
+        },
       },
-      hover: {
-        mode: 'nearest' as const,
-        borderColor: '#ffffff',
-        borderWidth: 3,
-      },
+    },
+    animation: {
+      duration: 2000,
+      easing: 'easeInOutCubic',
     },
   }
 
@@ -133,7 +157,7 @@ const YourChartComponent: React.FC = () => {
     <div className="chart-container">
       {chartData ? (
         // @ts-ignore
-        <Doughnut data={chartData} options={options} />
+        <Bar data={chartData} options={options} />
       ) : (
         <p>Loading chart...</p>
       )}
@@ -141,4 +165,4 @@ const YourChartComponent: React.FC = () => {
   )
 }
 
-export default YourChartComponent
+export default YourBarChartComponent
