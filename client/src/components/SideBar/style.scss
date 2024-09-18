@@ -9,9 +9,20 @@
   overflow-y: hidden;
   background-color: $primary-color;
   position: sticky;
+  transition: transform 0.3s ease; // Transition for sliding effect
+
+  // Hide sidebar by default on mobile screens
   @include mq(768px) {
-    display: none;
+    transform: translateX(-100%); // Hide off-screen
+    position: fixed;
+    width: 100vw; // Full width on small screens
+    z-index: 10;
   }
+
+  &.open {
+    transform: translateX(0); // Slide in on menu open
+  }
+
   .inner_wrap {
     padding: 32px;
     display: flex;
@@ -23,11 +34,15 @@
       color: $hover-color;
       font-size: 20px;
       margin: 0;
+
+      @include mq(768px) {
+        font-size: 18px; // Adjust logo size on mobile
+      }
     }
+
     .nav_flex {
       padding-left: 0.5rem;
       display: flex;
-      // justify-content: center;
       align-items: center;
       color: $grey01;
       font-size: 20px;
@@ -35,11 +50,12 @@
       border-radius: 8px;
       cursor: pointer;
       margin: 0.5rem 0;
-      transition: background-color 0.3s ease, color 0.3s ease; // Add transition for smooth hover effect
+      transition: background-color 0.3s ease, color 0.3s ease;
 
       .icon {
         font-size: 24px;
       }
+
       &.active {
         background-color: $hover-color;
         color: white;
@@ -49,10 +65,28 @@
         background-color: $hover-color;
         color: white;
       }
+
       &.bottom {
         margin-top: auto;
         margin-bottom: 0;
       }
     }
+  }
+}
+
+// Menu icon styling for mobile view
+.menu-icon {
+  display: none;
+  font-size: 32px;
+  color: white;
+  cursor: pointer;
+  position: absolute;
+  top: -5px;
+  right: 0px;
+  // left: 5px;
+  z-index: 20; // Higher than sidebar
+
+  @include mq(768px) {
+    display: block;
   }
 }
