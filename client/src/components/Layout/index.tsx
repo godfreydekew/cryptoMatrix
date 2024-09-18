@@ -11,7 +11,7 @@ const Layout = ({ children }: any) => {
       {/* Main Content Area */}
       <div style={{ flex: 1 }}>
         {/* Navbar */}
-        <Navbar />
+        {/* <Navbar /> */}
 
         {/* Page Content */}
         <div style={{ padding: '20px' }}>{children}</div>
