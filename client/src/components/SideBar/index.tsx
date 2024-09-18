@@ -23,7 +23,7 @@ const SideBar = () => {
       icon: <GrTransaction />,
       link: '/dashboard/transactions',
     },
-    { name: 'Wallet', icon: <IoWalletOutline />, link: '/dashboard' },
+    // { name: 'Wallet', icon: <IoWalletOutline />, link: '/dashboard' },
     { name: 'News', icon: <RiNewsLine />, link: '/news' },
   ]
 
