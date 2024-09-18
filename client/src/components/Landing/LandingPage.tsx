@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { FaBitcoin, FaEthereum, FaWallet } from 'react-icons/fa'
+import {FaUser,FaRobot , FaRocket, FaChartLine,  FaRegClock,FaExchangeAlt,FaChartPie, FaBitcoin,FaLock, FaEthereum, FaWallet } from 'react-icons/fa'
 import './style.scss'
 import { Button } from '@mui/material'
 import CustomModal from '../Modal/Modal'
@@ -72,10 +72,9 @@ const LandingPage: React.FC = () => {
 
         {/* Hero Section */}
         <section className="hero">
-          <h1>We make crypto clear and simple</h1>
+          <h1>Take Control of Your Crypto Portfolio</h1>
           <p>
-            Buy, sell, and grow your crypto assets on CryptoMatrix, the platform
-            designed for everyone.
+          Track your balance, monitor transactions, and analyze your portfolio, all in one place.
           </p>
           <button className="cta-button" onClick={() => navigate('/connect')}>
             Get Started
@@ -83,51 +82,78 @@ const LandingPage: React.FC = () => {
         </section>
 
         {/* Features Section */}
+       {/* Features Section */}
         <section className="features" id="features">
-          <h2>What We offer</h2>
+          <h2>What We Offer</h2>
           <div className="features_inner">
             <div className="feature-item">
-              <FaBitcoin className="icon" />
-              <h3>Trade Desk</h3>
-              <p>Instant access to professional trading options.</p>
-              <button onClick={() => navigate('/connect')}>Get Started</button>
+              <FaChartLine className="icon" />
+              <h3>Real-Time Balance Tracking</h3>
+              <p>Stay updated with real-time tracking of your cryptocurrency balances across various wallets and exchanges.</p>
+              <button onClick={() => navigate('/connect')}>Track Now</button>
             </div>
             <div className="feature-item">
-              <FaEthereum className="icon" />
-              <h3>CryptoMatrix ATMs</h3>
-              <p>Find a crypto ATM near you.</p>
-              <button>Find an ATM</button>
+              <FaExchangeAlt className="icon" />
+              <h3>Transaction History</h3>
+              <p>Access your complete transaction history, including deposits, withdrawals, and trades, in one place.</p>
+              <button onClick={() => navigate('/transactions')}>View History</button>
             </div>
             <div className="feature-item">
-              <FaWallet className="icon" />
-              <h3>CryptoMatrix Wallet</h3>
-              <p>Download our secure crypto wallet.</p>
-              <button>Download</button>
+              <FaChartPie className="icon" />
+              <h3>Advanced Portfolio Analysis</h3>
+              <p>Analyze your cryptocurrency portfolio with detailed reports and insights to optimize your investments.</p>
+              <button onClick={() => navigate('/analysis')}>Analyze Portfolio</button>
             </div>
+
           </div>
         </section>
+
         <Team />
 
         {/* Investment Platform Section */}
         <section className="investment-platform" id="about-us">
-          <h2>
-            A crypto investment platform <br /> that invests in you
-          </h2>
-          <p>
-            We invest more resources than any other platrom in making sure great{' '}
-            <br />
-            support from real people is a click away, whenever you need it.
-          </p>
-          <button className="cta-button" onClick={() => navigate('/connect')}>
-            Get Started
-          </button>
+          <div className="investment-content">
+            <div className="video-container">
+              <video
+                src="https://coinstats.app/static/images/onboarding/profit-loss-banner.webm"
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="background-video"
+              />
+            </div>
+            <div className="text-content">
+            <h3><FaRocket className="icon" /> Revolutionizing Your Crypto Experience</h3>
+            <p>Our platform leverages cutting-edge Web3 technology to provide you with unparalleled control and transparency in managing your crypto assets.</p>
+                <div className="feature-list">
+                  <div className="feature-item">
+                    <FaRegClock className="feature-icon" />
+                    <h4>Real-Time Insights</h4>
+                    <p>Track your assets with instantaneous updates across all your wallets and exchanges, giving you complete visibility into your investments.</p>
+                  </div>
+                  <div className="feature-item">
+                    <FaChartLine className="feature-icon" />
+                    <h4>Advanced Analytics</h4>
+                    <p>Gain in-depth understanding of your portfolio's performance through detailed reports and analytics, ensuring you make informed investment decisions.</p>
+                  </div>
+                  <div className="feature-item">
+                    <FaRocket className="feature-icon" />
+                    <h4>Next-Gen Security</h4>
+                    <p>Experience robust security features with Web3 standards to safeguard your assets against unauthorized access and cyber threats.</p>
+                  </div>
+                </div>
+            <button className="cta-button" onClick={() => navigate('/connect')}>Get Started</button>
+          </div>
+          </div>
         </section>
+
         <section className="support-section">
           <div className="support-image">
             <img src={support} alt="Support Icon" />
           </div>
           <div className="support-content">
-            <h2>24/7 access to full service customer support</h2>
+            <h2>24/7 access to full virtual customer service support</h2>
             <p>
               We invest more resources than any other platform in making sure
               great support from real people is a click away, whenever you need
