@@ -6,6 +6,7 @@ import dotenv from "dotenv";
 import bybitRoutes from "./routes/bybitRoutes.js";
 import coinGeckoRoutes from "./routes/coinGeckoRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
+import chartGptRouter from "./routes/openAI.js"
 import sessionMiddleware from "./config/session.js"; // MongoDB-based session
 import connectDB from "./config/db.js";
 
@@ -64,6 +65,7 @@ app.use(sessionMiddleware);
 app.use("/user", userRoutes);
 app.use("/bybit", bybitRoutes);
 app.use("/movers", coinGeckoRoutes);
+app.use("/chat", chartGptRouter); // OpenAI chatbot route
 
 app.get("/", (req, res) => {
   res.send("Welcome to the cryptocurrency API");

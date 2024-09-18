@@ -1,7 +1,56 @@
 //controllers/userController.js
 import User from '../models/User.js';
 import bcrypt from 'bcryptjs';
+import createBybitClient from '../config/bybit.js';
+import nodemailer from 'nodemailer';
 
+const PASSWORD =  process.env.EMAIL_PASSWORD;
+// Configure Nodemailer transporter
+const transporter = nodemailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true, // Use SSL/TLS for secure connection
+    auth: {
+        user: "dekewgodfrey@gmail.com",  // Your email
+        pass: PASSWORD ||"xibegzoydgxlerka"  // Your app password
+    }
+});
+
+
+// Function to send a welcome email after successful registration
+const sendWelcomeEmail = (username, recipientEmail) => {
+    const subject = `Welcome to CryptoMatrix, ${username}!`;
+    const text = `Dear ${username},
+
+Thank you for joining CryptoMatrix. We're pleased to confirm your account has been successfully created.
+
+How CryptoMatrix can help you:
+
+• Track your balance across multiple wallets and exchanges in real-time
+• Monitor your transaction history, including deposits and withdrawals
+• Gain insights into your portfolio with advanced analytics
+
+Our support team is available if you need assistance.
+
+Best regards,
+
+The CryptoMatrix Team`;
+
+    const mailOptions = {
+        from: "dekewgodfrey@gmail.com",  // Sender email
+        to: recipientEmail,  // Recipient email
+        subject: subject,
+        text: text
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+            console.error('Error sending welcome email:', error);
+        } else {
+            console.log('Welcome email sent:', info.response);
+        }
+    });
+};
 // Signup controller
 const registerUser = async (req, res) => {
     
@@ -14,6 +63,15 @@ const registerUser = async (req, res) => {
 
         if (!apiKey || !secretKey) return res.status(404).json({ error:  'API key or Secret key missing'});
 
+        const bybitClient = createBybitClient(apiKey, secretKey);
+        const accountType = 'FUND';
+        const coin = '';
+        const response = await bybitClient.getAllCoinsBalance({ accountType, coin });
+        if (response.retMsg !== 'success') {
+          console.error('Error getting balance:', response.retMsg);
+          throw new Error(response.retMsg);  // Throw an error with the retMsg for easier debugging.
+        } 
+
         const user = await User.create({ username, email, password, apiKey, secretKey });
 
         console.log('Befor logging in', req.session)
@@ -23,6 +81,7 @@ const registerUser = async (req, res) => {
         req.session.apiKey = user.apiKey;  // Store API key in session
         req.session.secretKey = user.secretKey;  // Store Secret key in session
         // console.log('Session data:', req.session);
+        sendWelcomeEmail(username, email);
         res.status(201).json({ message: 'User registered successfully' });
     } catch (error) {
         console.error('Registration error:', error);

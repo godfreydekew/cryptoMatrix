@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { SiBitcoinsv } from 'react-icons/si'
-import TopMoversTable from '../Table/TopMovers'
+import YourBarChartComponent from '../Table/TopMovers'
 import { BASE_URL } from '../../api/api'
 import { fetchTopMovers, fetchTotalBalance, fetchAssets } from '../../api/api'
+import ChatbotAssistant from '../openAiChatbot'
 
 interface Coin {
   name: string
@@ -154,7 +155,8 @@ const MainDashBoard = () => {
             </div>
             <div className="right">
               <h3>Assets distributions</h3>
-              <TopMoversTable />
+              <YourBarChartComponent />
+              <ChatbotAssistant />
             </div>
           </div>
         </div>

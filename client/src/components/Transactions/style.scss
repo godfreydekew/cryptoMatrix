@@ -1,182 +1,76 @@
 @use '../../assets/index' as *;
 
+
+$primary-color: #1b2028;
+$hover-border-color: #3a6ff8;;
+$sent-color: #e74c3c; // Red for "Sent"
+$received-color: green; // Blue for "Received"
+
 .transactions-page {
-  background-color: #000; // Dark background for the page
-  color: #fff;
-  //   min-height: 100vh;
+  width: 100%;
   padding: 20px;
-  max-height: calc(100vh - 100px);
-  overflow-y: scroll;
-  @include webkit;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+  background-color: $primary-color;
+  color: white;
 
-  header.header {
+  .transactions-header,
+  .transactions-body {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .transaction-row {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
+    padding: 20px;
+    border-bottom: 1px solid #3c4049;
+    background-color: darken($primary-color, 5%);
 
-    h1 {
-      font-size: 24px;
-      margin: 0;
+    &:hover {
+      border: 1px solid $hover-border-color;
     }
 
-    .actions {
-      display: flex;
-      gap: 15px;
+    &:nth-child(odd) {
+      background-color: darken($primary-color, 2%);
+    }
 
-      .btn {
-        padding: 8px 20px;
-        border: 1px solid #fff;
-        background-color: transparent;
-        color: #fff;
-        border-radius: 4px;
-        cursor: pointer;
-        font-weight: bold;
+    &:nth-child(even) {
+      background-color: lighten($primary-color, 1%);
+    }
 
-        &:hover {
-          background-color: #333;
-        }
-
-        &.swap {
-          background-color: #007aff;
-          border: none;
-
-          &:hover {
-            background-color: #005bb5;
-          }
-        }
-      }
+    &.transaction-header {
+      background-color: $hover-border-color;
+      color: white;
+      font-weight: bold;
     }
   }
 
-  .filters {
-    display: flex;
-    gap: 20px;
-    margin-bottom: 20px;
+  .transaction-cell {
+    flex: 1;
+    text-align: left;
+    padding: 10px;
 
-    .search {
-      flex: 2;
-      input {
-        color: #fff;
-        background-color: #222;
-        border-radius: 4px;
-      }
+    &:first-child {
+      flex: 0.8;
     }
 
-    .transaction-type {
-      flex: 1;
-      select {
-        color: #fff;
-        background-color: #222;
-        border-radius: 4px;
-      }
+    &:last-child {
+      flex: 1.2;
     }
 
-    .date-picker {
-      flex: 1;
-
-      input {
-        color: #fff;
-        background-color: #222;
-        border-radius: 4px;
-      }
-    }
-  }
-
-  // Table Headers Styling
-  .transactions-header {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px 20px;
-    background-color: #111;
-    color: #fff;
-    font-weight: bold;
-
-    span {
-      flex: 1;
-      text-align: left;
+    &.sent {
+      color: $sent-color; // Red for "Sent"
     }
 
-    .header-type {
-      flex-basis: 10%;
+    &.received {
+      color: $received-color; // Blue for "Received"
     }
 
-    .header-asset {
-      flex-basis: 30%;
-    }
-
-    .header-value {
-      flex-basis: 20%;
-    }
-
-    .header-pl {
-      flex-basis: 15%;
-    }
-
-    .header-portfolio {
-      flex-basis: 20%;
-    }
-  }
-
-  // Transaction List
-  .transactions-list {
-    .transaction {
-      margin-bottom: 20px;
-
-      .transaction-header {
-        padding: 10px 20px;
-        background-color: #111;
-        color: #aaa;
-        font-size: 14px;
-      }
-
-      .transaction-body {
-        display: flex;
-        justify-content: space-between;
-        padding: 10px 20px;
-        background-color: #1c1c1c;
-        color: #fff;
-
-        .type {
-          flex-basis: 10%;
-          display: flex;
-          align-items: center;
-        }
-        .type {
-          font-weight: bold;
-          &.sent {
-            color: #ff4d4d;
-          }
-          &.received {
-            color: #4dff4d;
-          }
-        }
-
-        .asset {
-          flex-basis: 30%;
-          display: flex;
-          align-items: center;
-        }
-
-        .current-value {
-          flex-basis: 20%;
-          display: flex;
-          align-items: center;
-        }
-
-        .pl {
-          flex-basis: 15%;
-          display: flex;
-          align-items: center;
-          color: #f00; // Red color for negative P/L
-        }
-
-        .portfolio {
-          flex-basis: 20%;
-          display: flex;
-          align-items: center;
-        }
-      }
+    // Style for smaller screen widths
+    @media (max-width: 768px) {
+      font-size: 14px;
+      padding: 8px;
     }
   }
 }
