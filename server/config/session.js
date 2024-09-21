@@ -9,7 +9,7 @@ const sessionMiddleware = session({
     saveUninitialized: false,
     cookie: {
         maxAge: 1000 * 60 * 60 * 24, // 1 day
-        httpOnly: false,//put true when you deploy
+        httpOnly: true,//put true when you deploy
         secure: process.env.NODE_ENV === 'production' // secure: true in production (HTTPS)
     }
 });
