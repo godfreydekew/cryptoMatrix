@@ -52,7 +52,12 @@ const TransactionsPage: React.FC = () => {
     fetchData();
   }, []);
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return  (
+      <div className="loading-container">
+        <div className="loader"></div>
+        <p>Loading Transactions...</p>
+      </div>
+  );
   if (error) return <div>{error}</div>;
 
   return (

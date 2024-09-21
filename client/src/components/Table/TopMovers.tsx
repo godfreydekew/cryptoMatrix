@@ -90,6 +90,7 @@ const YourBarChartComponent: React.FC = () => {
 
   const options = {
     responsive: true,
+    maintainAspectRatio: false,
     plugins: {
       tooltip: {
         callbacks: {

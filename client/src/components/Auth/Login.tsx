@@ -18,7 +18,7 @@ const LoginForm: React.FC = () => {
   const onSubmit = async (data: FieldValues) => {
     try {
       const response = await loginUser(data.email, data.password)
-      alert(`Successful, ${response}`)
+      // alert(`Successful, ${response}`)
       console.log(response)
 
       navigate('/dashboard')

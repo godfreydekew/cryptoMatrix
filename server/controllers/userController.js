@@ -4,15 +4,16 @@ import bcrypt from 'bcryptjs';
 import createBybitClient from '../config/bybit.js';
 import nodemailer from 'nodemailer';
 
+
+
 const PASSWORD =  process.env.EMAIL_PASSWORD;
-// Configure Nodemailer transporter
 const transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
     port: 465,
     secure: true, // Use SSL/TLS for secure connection
     auth: {
         user: "dekewgodfrey@gmail.com",  // Your email
-        pass: PASSWORD ||"xibegzoydgxlerka"  // Your app password
+        pass: PASSWORD
     }
 });
 
@@ -22,19 +23,19 @@ const sendWelcomeEmail = (username, recipientEmail) => {
     const subject = `Welcome to CryptoMatrix, ${username}!`;
     const text = `Dear ${username},
 
-Thank you for joining CryptoMatrix. We're pleased to confirm your account has been successfully created.
+    Thank you for joining CryptoMatrix. We're pleased to confirm your account has been successfully created.
 
-How CryptoMatrix can help you:
+    How CryptoMatrix can help you:
 
-• Track your balance across multiple wallets and exchanges in real-time
-• Monitor your transaction history, including deposits and withdrawals
-• Gain insights into your portfolio with advanced analytics
+    • Track your balance across multiple wallets and exchanges in real-time
+    • Monitor your transaction history, including deposits and withdrawals
+    • Gain insights into your portfolio with advanced analytics
 
-Our support team is available if you need assistance.
+    Our support team is available if you need assistance.
 
-Best regards,
-
-The CryptoMatrix Team`;
+    Best regards,
+    
+    The CryptoMatrix Team`;
 
     const mailOptions = {
         from: "dekewgodfrey@gmail.com",  // Sender email
@@ -103,14 +104,14 @@ const loginUser = async (req, res) => {
     try {
         const user = await User.findOne({ email });
         if (!user || !(await user.matchPassword(password))) {
-            return res.status(401).json({ error: 'Invalid credentials' });
+            return res.status(401).json({ error: 'Invalid password' });
         }
 
         // Store user info in session
         req.session.userId = user._id;
         req.session.username = user.username;
-        req.session.apiKey = user.apiKey;  // Store API key in session
-        req.session.secretKey = user.secretKey;  // Store Secret key in session
+        req.session.apiKey = user.apiKey;  
+        req.session.secretKey = user.secretKey;
         console.log('Session data:', req.session);
 
         res.json({ message: 'Logged in successfully'});
@@ -178,5 +179,83 @@ const getApiKeys = async (req, res) => {
     }
 };
 
+// Helper function to generate a 5-digit random code
+const generateRecoveryCode = () => {
+    return Math.floor(10000 + Math.random() * 90000).toString();
+};
 
-export { registerUser, loginUser, logoutUser, updateApiKey, getApiKeys };
+// Function to send the recovery code via email
+const sendRecoveryCode = (email, code) => {
+    const mailOptions = {
+        from: 'dekewgodfrey@gmail.com',
+        to: email,
+        subject: 'CryptoMatrix Password Reset',
+        text: `Your cryptoMatrix password reset code is: ${code} \nPLease dont share it with anyone`
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+            console.error('Error sending recovery code email:', error);
+        } else {
+            console.log('Recovery code email sent:', info.response);
+        }
+    });
+};
+
+
+const requestPasswordReset = async (req, res) => {
+    const { email } = req.body;
+
+    try {
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        // Generate recovery code and send it via email
+        const recoveryCode = generateRecoveryCode();
+        user.recoveryCode = recoveryCode;
+        await user.save();
+
+        sendRecoveryCode(email, recoveryCode);
+
+        res.json({ message: 'Recovery code sent to your email.' });
+    } catch (error) {
+        console.error('Error during password reset request:', error);
+        res.status(500).json({ error: 'Server error' });
+    }
+};
+
+
+// Password reset (validate recovery code and set new password)
+const resetPassword = async (req, res) => {
+    const { email, recoveryCode, newPassword } = req.body;
+
+    try {
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        // Validate the recovery code
+        if (user.recoveryCode !== recoveryCode) {
+            return res.status(400).json({ error: 'Invalid recovery code' });
+        }
+
+        // // Update the password
+        // const salt = await bcrypt.genSalt(10);
+        // user.password = await bcrypt.hash(newPassword, salt);
+        user.password = newPassword;
+        user.recoveryCode = null;
+        await user.save();
+
+        res.json({ message: 'Password has been reset successfully' });
+    } catch (error) {
+        console.error('Error during password reset:', error);
+        res.status(500).json({ error: 'Server error' });
+    }
+};
+
+// sendRecoveryCode('dekewgodfrey@icloud.com', '234234523')
+// console.log(generateRecoveryCode())
+export { registerUser, loginUser, logoutUser, updateApiKey, getApiKeys, requestPasswordReset, resetPassword};

@@ -108,7 +108,7 @@ const LandingPage: React.FC = () => {
           </div>
         </section>
 
-        <Team />
+        {/* <Team /> */}
 
         {/* Investment Platform Section */}
         <section className="investment-platform" id="about-us">
@@ -124,8 +124,8 @@ const LandingPage: React.FC = () => {
               />
             </div>
             <div className="text-content">
-            <h3><FaRocket className="icon" /> Revolutionizing Your Crypto Experience</h3>
-            <p>Our platform leverages cutting-edge Web3 technology to provide you with unparalleled control and transparency in managing your crypto assets.</p>
+            {/* <h3><FaRocket className="icon" /> Revolutionizing Your Crypto Experience</h3>
+            <p>Our platform leverages cutting-edge Web3 technology to provide you with unparalleled control and transparency in managing your crypto assets.</p> */}
                 <div className="feature-list">
                   <div className="feature-item">
                     <FaRegClock className="feature-icon" />
@@ -143,7 +143,7 @@ const LandingPage: React.FC = () => {
                     <p>Experience robust security features with Web3 standards to safeguard your assets against unauthorized access and cyber threats.</p>
                   </div>
                 </div>
-            <button className="cta-button" onClick={() => navigate('/connect')}>Get Started</button>
+            {/* <button className="cta-button" onClick={() => navigate('/connect')}>Get Started</button> */}
           </div>
           </div>
         </section>
