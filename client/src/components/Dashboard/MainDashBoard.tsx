@@ -117,10 +117,10 @@ const MainDashBoard = () => {
                   <div className="single_row" key={i}>
                     <div className="flex">
                       <div className="top_part">
-                        <div className="coin_logo">
-                          {/* Placeholder for coin logo */}
+                        {/* <div className="coin_logo">
+                          
                           <SiBitcoinsv size={40} />
-                        </div>
+                        </div> */}
                         <div className="name_section">
                           <div className="text">
                             <p className="name">{asset.coin}</p>

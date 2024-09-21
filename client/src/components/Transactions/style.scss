@@ -6,6 +6,30 @@ $hover-border-color: #3a6ff8;;
 $sent-color: #e74c3c; // Red for "Sent"
 $received-color: green; // Blue for "Received"
 
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 940px; // Match the height of chart-container
+  background-color:  #1b2028; // Match the background of charts-page
+
+  .loader {
+    border: 7px solid #333; // Darker color for the outer circle
+    border-top: 5px solid blue; // White color for the spinning part
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+  }
+
+  p {
+    margin-top: 20px;
+    color: #ffffff;
+    font-size: 18px;
+  }
+}
+
 .transactions-page {
   width: 100%;
   padding: 20px;

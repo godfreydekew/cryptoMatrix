@@ -1,6 +1,6 @@
 //routes/userRoutes
 import express from 'express';
-import { registerUser, loginUser, logoutUser, updateApiKey, getApiKeys } from '../controllers/userController.js';
+import { registerUser, loginUser, logoutUser, updateApiKey, getApiKeys, requestPasswordReset, resetPassword } from '../controllers/userController.js';
 import { isAuthenticated } from '../middleware/auth.js';  // Auth middleware
 
 const router = express.Router();
@@ -13,6 +13,11 @@ router.post('/login', loginUser);
 
 // Logout route
 router.post('/logout', logoutUser);
+
+router.post('/request-password-reset', requestPasswordReset);
+
+// Reset password route
+router.post('/reset-password', resetPassword);
 
 // Update API key route
 router.put('/update-api', isAuthenticated, updateApiKey);

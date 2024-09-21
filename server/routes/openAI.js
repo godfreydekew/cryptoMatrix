@@ -19,9 +19,17 @@ router.post('/gpt', async (req, res) => {
   try {
     const { message } = req.body;
 
+    const systemPrompt = {
+      role: "system",
+      content: "You are an AI expert in cryptocurrency and blockchain technology. Provide brief, informative responses to educate users about cryptocurrency in a clear and concise manner."
+    };
     const completion = await openai.chat.completions.create({
       model: "openai/gpt-4o-mini",//gpt-3.5-turbo
-      messages: [{ role: "user", content: message }]
+      messages: [
+        systemPrompt,
+        { role: "user", content: message },
+      ],
+      max_tokens: 100 
     });
 
     res.json({ message: completion.choices[0].message.content });
@@ -30,22 +38,5 @@ router.post('/gpt', async (req, res) => {
     res.status(500).json({ error: 'An error occurred while processing your request.' });
   }
 });
-
-
-// router.get('/limits', async(req, res) => {
-//   try {
-//     const response = await axios.get('https://openrouter.ai/api/v1/models', {
-//       headers: {
-//         Authorization: `Bearer ${OP}`,  // Use your API key here
-//       },
-//     });
-
-//     // Send the response data back to the client
-//     res.json(response.data);
-//   } catch (error) {
-//     console.error('Error in limits route:', error);
-//     res.status(500).json({ error: 'An error occurred while processing your request.' });
-//   }
-// })
 
 export default router;

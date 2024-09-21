@@ -26,7 +26,7 @@ const BybitApiSync: React.FC = () => {
         data.api_key,
         data.api_secret,
       )
-      alert(`Registration successful:, ${response}`)
+      // alert(`Registration successful:, ${response}`)
       navigate('/dashboard')
     } catch (error) {
       console.error('Registration failed:', error)
@@ -40,11 +40,11 @@ const BybitApiSync: React.FC = () => {
         <div className="wrapper">
           <div className="left-section">
             <div className="header">
-              <img
+              {/* <img
                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Bybit_logo.svg/512px-Bybit_logo.svg.png"
                 alt="Bybit"
                 className="logo"
-              />
+              /> */}
               <h2>API Sync</h2>
             </div>
 

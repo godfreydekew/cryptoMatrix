@@ -151,6 +151,8 @@
             border-radius: 12px;
             margin-top: 24px;
             padding: 24px;
+            height: 400px;
+            overflow-y: scroll;
             h4 {
               font-size: 24px;
               color: white;
@@ -181,7 +183,7 @@
         }
         .right {
           width: 68%;
-          height: 100%;
+          height: 600px;
           background-color: $primary-color;
           padding: 24px 0;
           border-radius: 12px;
