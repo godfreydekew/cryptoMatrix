@@ -10,13 +10,18 @@ import { useForm, FieldValues } from 'react-hook-form'
 
 import CustomInput from '../customInput/CustomInput'
 import LoginForm from '../Auth/Login'
-import RegisterForm from '../Auth/Register'
+import RegisterForm from '../Auth/ConfirmPssword'
 import Team from '../Team'
+import ResetPassword from '../Auth/ResetPassword'
 
 const authTab = [
   {
     name: 'Log In',
     value: 'login',
+  },
+  {
+    name: 'Reset Password',
+    value: 'reset',
   },
 ]
 
@@ -69,7 +74,12 @@ const Navbar: React.FC = () => {
               })}
             </div>
             {tab == 'login' && <LoginForm />}
-            {tab == 'signup' && <RegisterForm />}
+            {tab == 'reset' && <ResetPassword />}
+            {tab == 'login' && (
+              <p onClick={() => setTab('reset')} style={{ cursor: 'pointer' }}>
+                Forgot Password?
+              </p>
+            )}
           </div>
         </CustomModal>
       )}

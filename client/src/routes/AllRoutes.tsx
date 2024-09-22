@@ -9,6 +9,7 @@ import NewsPage from '../components/News'
 import ChartsPage from '../components/Chart'
 import { AuthProvider } from '../store/AuthProvider' // Import AuthProvider
 import ProtectedRoute from '../store/ProtectedRoute' // Import ProtectedRoute
+import ConfirmPassword from '../components/Auth/ConfirmPssword'
 
 const LayoutWrapper = ({ element }: any) => {
   return <Layout>{element}</Layout>
@@ -22,6 +23,7 @@ const AllRoutes = () => {
           {/* Public Routes */}
           <Route path="/" element={<LandingPage />} />
           <Route path="/connect" element={<BybitApiSync />} />
+          <Route path="/reset-password" element={<ConfirmPassword />} />
 
           {/* Protected Routes */}
           <Route
