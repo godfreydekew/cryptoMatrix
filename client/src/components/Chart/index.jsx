@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {TradingViewWidget} from "react-tradingview-widget";
+import TradingViewWidget from "react-tradingview-widget";
 import "./style.scss";
 
 const ChartsPage = () => {
@@ -24,8 +24,8 @@ const ChartsPage = () => {
         <div className="chart-container">
           <TradingViewWidget
             symbol="BTCUSDT"
-            interval="1D"
-            theme="dark"
+            interval="D"
+            theme="Dark"
             locale="en"
             autosize
             toolbar={true}
