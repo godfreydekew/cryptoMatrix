@@ -61,10 +61,17 @@ const ResetPassword: React.FC = () => {
           inputClass="login-short"
         />
 
-        <Button type="submit" variant="contained" disabled={!email || !isValid}>
+        <Button
+          type="submit"
+          variant="contained"
+          disabled={!email || !isValid}
+          style={{ marginBottom: '2rem' }}>
           Reset Password
         </Button>
       </form>
+      <a href="/reset-password" style={{ color: 'white', marginTop: '1rem' }}>
+        Got the code? Proceed to set my new password
+      </a>
 
       <ToastWidget
         open={toast.open}
