@@ -18,7 +18,7 @@ const sessionMiddleware = session({
         maxAge: 1000 * 60 * 60 * 24, // 1 day
         httpOnly: true, // Prevents client-side JS from accessing the cookie
         secure: process.env.NODE_ENV === 'production', // Only set cookies over HTTPS in production
-        // sameSite: 'strict' // Prevent CSRF by ensuring cookies are only sent on same-origin requests
+        sameSite: 'none' // Prevent CSRF by ensuring cookies are only sent on same-origin requests
     }
 });
 
