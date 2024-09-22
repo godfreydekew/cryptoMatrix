@@ -1,8 +1,6 @@
 //config/bybit.js
+import 'dotenv/config';
 import { RestClientV5 } from "bybit-api";
-import dotenv from 'dotenv';
-
-dotenv.config();
 
 const DEFAULT_API_KEY = process.env.API_KEY;
 const DEFAULT_API_SECRET = process.env.API_SECRET;

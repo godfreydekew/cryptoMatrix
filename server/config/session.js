@@ -1,6 +1,6 @@
+import 'dotenv/config';
 import session from 'express-session';
 import MongoStore from 'connect-mongo';
-import mongoose from 'mongoose';
 
 // Ensure MongoDB connection is established before using the session store
 const mongoStore = MongoStore.create({
