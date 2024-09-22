@@ -50,8 +50,8 @@ const AllRoutes = () => {
           />
           <Route
             path="/chart"
-            element={<ChartsPage />} />
-    
+            element={<LayoutWrapper element={<ChartsPage />} />}
+          />
         </Routes>
       </AuthProvider>
     </Router>
