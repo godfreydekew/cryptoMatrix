@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './style.scss'; // Updated SCSS
+import { BASE_URL } from '../../api/api';
 
 interface Transaction {
   type: string;
@@ -19,7 +20,7 @@ const TransactionsPage: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:4000/bybit/transactions'); // API endpoint
+        const response = await axios.get(`${BASE_URL}/bybit/transactions`); // API endpoint
         const data = response.data;
 
         const transformedTransactions: Transaction[] = [

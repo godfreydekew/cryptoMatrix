@@ -47,8 +47,8 @@ const AllRoutes = () => {
           />
           <Route
             path="/chart"
-            element={<LayoutWrapper element={<ChartsPage />} />}
-          />
+            element={<ChartsPage />} />
+    
         </Routes>
       </AuthProvider>
     </Router>
