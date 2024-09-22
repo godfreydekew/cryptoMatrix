@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import TradingViewWidget from "react-tradingview-widget";
+import {TradingViewWidget} from "react-tradingview-widget";
 import "./style.scss";
 
 const ChartsPage = () => {
