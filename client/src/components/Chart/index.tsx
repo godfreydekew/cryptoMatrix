@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
-import TradingViewWidget from "react-tradingview-widget";
+import TradingViewWidget from "react-tradingview-widget"; // Make sure this package has TypeScript support
 import "./style.scss";
 
-const ChartsPage = () => {
-  const [isLoading, setIsLoading] = useState(true);
+const ChartsPage: React.FC = () => {
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 2000); // Adjust this time as needed
+    }, 2000);
 
     return () => clearTimeout(timer);
   }, []);
