@@ -56,9 +56,13 @@ const CustomInput: React.FC<CustomInputProps> = ({
       </div>
       {errors && errors[name] && (
         <p className="error">
-          {errors[name]?.message || 'This field is required'}
+          {typeof errors[name]?.message === 'string'
+            ? (errors[name]?.message as string) 
+            : 'This field is required'}
         </p>
       )}
+
+
     </div>
   )
 }

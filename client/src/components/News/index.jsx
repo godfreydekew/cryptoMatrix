@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import './style.scss'
+import { BASE_URL } from '../../api/api'
 
 const NewsPage = () => {
   const [newsData, setNewsData] = useState([])
 
   useEffect(() => {
-    fetch('http://localhost:4000/movers/crypto-news')
+    fetch(`${BASE_URL}/movers/crypto-news`)
       .then((response) => response.json())
       .then((data) => setNewsData(data.news))
       .catch((error) => console.error('Error fetching news:', error))

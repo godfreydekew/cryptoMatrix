@@ -1,39 +1,39 @@
-import React, { useState, useEffect } from "react";
-import TradingViewWidget from "react-tradingview-widget";
-import "./style.scss";
+// TradingViewWidget.jsx
+import React, { useEffect, useRef, memo } from 'react';
 
-const ChartsPage = () => {
-  const [isLoading, setIsLoading] = useState(true);
+function TradingViewWidget() {
+  const container = useRef();
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 2000); // Adjust this time as needed
-
-    return () => clearTimeout(timer);
-  }, []);
+  useEffect(
+    () => {
+      const script = document.createElement("script");
+      script.src = "https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js";
+      script.type = "text/javascript";
+      script.async = true;
+      script.innerHTML = `
+        {
+          "autosize": true,
+          "symbol": "NASDAQ:AAPL",
+          "interval": "D",
+          "timezone": "Etc/UTC",
+          "theme": "dark",
+          "style": "1",
+          "locale": "en",
+          "allow_symbol_change": true,
+          "calendar": false,
+          "support_host": "https://www.tradingview.com"
+        }`;
+      container.current.appendChild(script);
+    },
+    []
+  );
 
   return (
-    <div className="charts-page">
-      {isLoading ? (
-        <div className="loading-container">
-          <div className="loader"></div>
-          <p>Loading chart...</p>
-        </div>
-      ) : (
-        <div className="chart-container">
-          <TradingViewWidget
-            symbol="BTCUSDT"
-            interval="1D"
-            theme="dark"
-            locale="en"
-            autosize
-            toolbar={true}
-          />
-        </div>
-      )}
+    <div className="tradingview-widget-container" ref={container} style={{ height: "100%", width: "100%" }}>
+      <div className="tradingview-widget-container__widget" style={{ height: "calc(100% - 32px)", width: "100%" }}></div>
+      <div className="tradingview-widget-copyright"><a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank"><span className="blue-text">Track all markets on TradingView</span></a></div>
     </div>
   );
-};
+}
 
-export default ChartsPage;
+export default memo(TradingViewWidget);

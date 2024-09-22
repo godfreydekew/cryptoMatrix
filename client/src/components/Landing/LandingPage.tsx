@@ -18,7 +18,6 @@ import CustomModal from '../Modal/Modal'
 import { useNavigate } from 'react-router-dom'
 import LoginForm from '../Auth/Login'
 import RegisterForm from '../Auth/ConfirmPssword'
-import Team from '../Team'
 import Navbar from '../Navbar'
 // @ts-ignore
 import support from '../../assets/images/icons.png'

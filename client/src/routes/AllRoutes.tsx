@@ -1,3 +1,4 @@
+// @ts-ignore
 import React from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import LandingPage from '../components/Landing/LandingPage'
@@ -49,8 +50,8 @@ const AllRoutes = () => {
           />
           <Route
             path="/chart"
-            element={<LayoutWrapper element={<ChartsPage />} />}
-          />
+            element={<ChartsPage />} />
+    
         </Routes>
       </AuthProvider>
     </Router>

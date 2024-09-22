@@ -1,8 +1,8 @@
 //server.js
+import 'dotenv/config';
 import express from "express";
 import cors from "cors"; // Import CORS for handling cross-origin requests
 import bodyParser from "body-parser"; // Import body-parser for parsing JSON
-import dotenv from "dotenv";
 import bybitRoutes from "./routes/bybitRoutes.js";
 import coinGeckoRoutes from "./routes/coinGeckoRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
@@ -10,32 +10,31 @@ import chartGptRouter from "./routes/openAI.js"
 import sessionMiddleware from "./config/session.js"; // MongoDB-based session
 import connectDB from "./config/db.js";
 
-dotenv.config();
-
 const app = express();
 const port = process.env.PORT || 4000;
-const corsOptions = {
-    origin: 'http://localhost:3000', // Allow only this origin (your frontend)
-    credentials: true, // Allow cookies to be sent with the request
-  };
+// const corsOptions = {
+//     origin: 'https://cryptomfrontend.onrender.com', // Allow only this origin (your frontend)
+//     credentials: true, // Allow cookies to be sent with the request
+//   };
   
-  app.use(cors(corsOptions)); //
+//   app.use(cors(corsOptions)); //
 
-// const allowedOrigins = ['http://localhost:4000', 'https://08de-78-135-2-38.ngrok-free.app'];
+const allowedOrigins = ['http://localhost:3000', 'https://cryptomfrontend.onrender.com'];
 
-// // Enable CORS for all routes
-// app.use(cors({
-//     origin: function(origin, callback) {
-//       if (!origin || allowedOrigins.includes(origin)) {
-//         callback(null, true);
-//       } else {
-//         callback(new Error('Not allowed by CORS'));
-//       }
-//     },
-//     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-//     allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
-//     credentials: true
-//   }));
+app.set("trust proxy", 1);
+// Enable CORS for all routes
+app.use(cors({
+    origin: function(origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+    credentials: true
+  }));
 
 //   app.options('*', cors({
 //   origin: function(origin, callback) {

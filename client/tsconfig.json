@@ -14,8 +14,8 @@
     "skipLibCheck": true,
     "strict": true,
     "target": "ESNext",
-    "types": ["vite"]
+    "types": ["vite"],
   },
-  "include": ["./src"],
+  "include": ["./src", "src/types"],
   "exclude": ["node_modules"]
 }
