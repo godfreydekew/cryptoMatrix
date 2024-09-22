@@ -14,28 +14,28 @@ dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 4000;
-const corsOptions = {
-    origin: 'https://cryptomfrontend.onrender.com', // Allow only this origin (your frontend)
-    credentials: true, // Allow cookies to be sent with the request
-  };
+// const corsOptions = {
+//     origin: 'https://cryptomfrontend.onrender.com', // Allow only this origin (your frontend)
+//     credentials: true, // Allow cookies to be sent with the request
+//   };
   
-  app.use(cors(corsOptions)); //
+//   app.use(cors(corsOptions)); //
 
-// const allowedOrigins = ['http://localhost:4000', 'https://08de-78-135-2-38.ngrok-free.app'];
+const allowedOrigins = ['http://localhost:3000', 'https://cryptomfrontend.onrender.com'];
 
-// // Enable CORS for all routes
-// app.use(cors({
-//     origin: function(origin, callback) {
-//       if (!origin || allowedOrigins.includes(origin)) {
-//         callback(null, true);
-//       } else {
-//         callback(new Error('Not allowed by CORS'));
-//       }
-//     },
-//     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-//     allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
-//     credentials: true
-//   }));
+// Enable CORS for all routes
+app.use(cors({
+    origin: function(origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+    credentials: true
+  }));
 
 //   app.options('*', cors({
 //   origin: function(origin, callback) {
