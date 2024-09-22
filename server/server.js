@@ -15,7 +15,7 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT || 4000;
 const corsOptions = {
-    origin: 'http://localhost:3000', // Allow only this origin (your frontend)
+    origin: 'https://cryptomfrontend.onrender.com', // Allow only this origin (your frontend)
     credentials: true, // Allow cookies to be sent with the request
   };
   
