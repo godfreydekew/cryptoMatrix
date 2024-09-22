@@ -21,6 +21,7 @@ const port = process.env.PORT || 4000;
 
 const allowedOrigins = ['http://localhost:3000', 'https://cryptomfrontend.onrender.com'];
 
+app.set("trust proxy", 1);
 // Enable CORS for all routes
 app.use(cors({
     origin: function(origin, callback) {
