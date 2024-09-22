@@ -16,8 +16,8 @@ const sessionMiddleware = session({
     store: mongoStore, // Use MongoStore to store sessions in MongoDB
     cookie: {
         maxAge: 1000 * 60 * 60 * 24, // 1 day
-        httpOnly: false, // Prevents client-side JS from accessing the cookie
-        secure: false,//process.env.NODE_ENV === 'production', // Only set cookies over HTTPS in production
+        httpOnly: true, // Prevents client-side JS from accessing the cookie
+        secure: process.env.NODE_ENV === 'production', // Only set cookies over HTTPS in production
         sameSite: 'none' // Prevent CSRF by ensuring cookies are only sent on same-origin requests
     }
 });
