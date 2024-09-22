@@ -10,16 +10,18 @@ const mongoStore = MongoStore.create({
 });
 
 const sessionMiddleware = session({
-    secret: process.env.SESSION_SECRET, // Store a strong secret in Render's environment variables
-    resave: false,
-    saveUninitialized: false,
-    store: mongoStore, // Use MongoStore to store sessions in MongoDB
-    cookie: {
-        maxAge: 1000 * 60 * 60 * 24, // 1 day
-        httpOnly: true, // Prevents client-side JS from accessing the cookie
-        secure: process.env.NODE_ENV === 'production', // Only set cookies over HTTPS in production
-        sameSite: 'none' // Prevent CSRF by ensuring cookies are only sent on same-origin requests
-    }
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: false,
+  store: mongoStore,
+  cookie: {
+      maxAge: 1000 * 60 * 60 * 24, // 1 day
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'none', // Required for cross-site cookies
+      domain: 'cryptombackend.onrender.com', // Your backend domain
+      path: '/' // Cookie is valid for the entire domain
+  }
 });
 
 export default sessionMiddleware;
