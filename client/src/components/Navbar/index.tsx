@@ -7,11 +7,10 @@ import './style.scss'
 import { Button } from '@mui/material'
 import CustomModal from '../Modal/Modal'
 import { useForm, FieldValues } from 'react-hook-form'
-
 import CustomInput from '../customInput/CustomInput'
 import LoginForm from '../Auth/Login'
 import RegisterForm from '../Auth/Register'
-import Team from '../Team'
+
 
 const authTab = [
   {
