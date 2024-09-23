@@ -2,7 +2,7 @@
 import axios from 'axios'
 
 export const BASE_URL = 'https://cryptombackend.onrender.com'
-// export const BASE_URL = 'http://13.60.197.156:3000';
+// export const BASE_URL = 'http://localhots:4000';
 axios.defaults.withCredentials = true
 // axios.defaults.baseURL = BASE_URL;
 

@@ -10,12 +10,15 @@ import chartGptRouter from "./routes/openAI.js"
 import sessionMiddleware from "./config/session.js"; // MongoDB-based session
 import connectDB from "./config/db.js";
 import { dirname, join } from 'path';
+import path from 'path';
 import { fileURLToPath } from 'url';
 
 const app = express();
 const port = process.env.PORT || 4000;
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+const __dirname = path.dirname(__filename);
+
+console.log(__dirname);
 
 // const corsOptions = {
 //     origin: 'https://cryptomfrontend.onrender.com', // Allow only this origin (your frontend)
@@ -65,12 +68,12 @@ app.use((req, res, next) => {
 });
 
 // Serve static files from the React app
-app.use(express.static(join(__dirname, '../client/dist')));
+app.use(express.static(path.join(__dirname, '../client/dist')));
 
 // Catch-all route to serve the React app
 app.get('*', (req, res) => {
   console.log(`Catch-all route triggered for: ${req.path}`);
-  res.sendFile(join(__dirname, '../client/dist', 'index.html'));
+  res.sendFile(path.join(__dirname, '../client/dist', 'index.html'));
 });
 // app.get("/", (req, res) => {
 //   res.send("Welcome to the cryptocurrency API");
