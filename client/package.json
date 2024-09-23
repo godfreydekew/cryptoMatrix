@@ -4,6 +4,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
+    "postbuild": "cp public/_redirects dist/",
     "serve": "vite preview",
     "type-check": "tsc",
     "test": "vitest",
