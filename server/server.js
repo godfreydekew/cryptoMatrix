@@ -67,17 +67,22 @@ app.use((req, res, next) => {
   next();
 });
 
-// Serve static files from the React app
-app.use(express.static(path.join(__dirname, '../client/dist')));
-
-// Catch-all route to serve the React app
-app.get('*', (req, res) => {
-  console.log(`Catch-all route triggered for: ${req.path}`);
-  res.sendFile(path.join(__dirname, '../client/dist', 'index.html'));
+app.use((req, res) => {
+  res.status(404).send("API route not found");
 });
-// app.get("/", (req, res) => {
-//   res.send("Welcome to the cryptocurrency API");
+
+
+// // Serve static files from the React app
+// app.use(express.static(path.join(__dirname, '../client/dist')));
+
+// // Catch-all route to serve the React app
+// app.get('*', (req, res) => {
+//   console.log(`Catch-all route triggered for: ${req.path}`);
+//   res.sendFile(path.join(__dirname, '../client/dist', 'index.html'));
 // });
+app.get("/", (req, res) => {
+  res.send("Welcome to the cryptocurrency API");
+});
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
