@@ -20,29 +20,29 @@ const __dirname = path.dirname(__filename);
 
 console.log(__dirname);
 
-// const corsOptions = {
-//     origin: 'https://cryptomfrontend.onrender.com', // Allow only this origin (your frontend)
-//     credentials: true, // Allow cookies to be sent with the request
-//   };
+// // const corsOptions = {
+// //     origin: 'https://cryptomfrontend.onrender.com', // Allow only this origin (your frontend)
+// //     credentials: true, // Allow cookies to be sent with the request
+// //   };
   
-//   app.use(cors(corsOptions)); //
+// //   app.use(cors(corsOptions)); //
 
-const allowedOrigins = ['http://localhost:3000', 'https://cryptomfrontend.onrender.com'];
+// const allowedOrigins = ['http://localhost:3000', 'https://cryptomfrontend.onrender.com'];
 
-app.set("trust proxy", 1);
-// Enable CORS for all routes
-app.use(cors({
-    origin: function(origin, callback) {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error('Not allowed by CORS'));
-      }
-    },
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
-    credentials: true
-  }));
+// app.set("trust proxy", 1);
+// // Enable CORS for all routes
+// app.use(cors({
+//     origin: function(origin, callback) {
+//       if (!origin || allowedOrigins.includes(origin)) {
+//         callback(null, true);
+//       } else {
+//         callback(new Error('Not allowed by CORS'));
+//       }
+//     },
+//     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+//     allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+//     credentials: true
+//   }));
 
 
 // Use body-parser to parse JSON request bodies
