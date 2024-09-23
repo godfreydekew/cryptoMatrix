@@ -59,14 +59,19 @@ app.use("/movers", coinGeckoRoutes);
 app.use("/chat", chartGptRouter); // OpenAI chatbot route
 
 
+app.use((req, res, next) => {
+  console.log(`Request received: ${req.method} ${req.path}`);
+  next();
+});
+
 // Serve static files from the React app
-app.use(express.static(join(__dirname, 'dist'))); // Adjust 'build' if necessary
+app.use(express.static(join(__dirname, '../client/dist')));
 
 // Catch-all route to serve the React app
 app.get('*', (req, res) => {
-  res.sendFile(join(__dirname, 'dist', 'index.html')); // Adjust path if necessary
+  console.log(`Catch-all route triggered for: ${req.path}`);
+  res.sendFile(join(__dirname, '../client/dist', 'index.html'));
 });
-
 // app.get("/", (req, res) => {
 //   res.send("Welcome to the cryptocurrency API");
 // });
