@@ -9,9 +9,14 @@ import userRoutes from "./routes/userRoutes.js";
 import chartGptRouter from "./routes/openAI.js"
 import sessionMiddleware from "./config/session.js"; // MongoDB-based session
 import connectDB from "./config/db.js";
+import { dirname, join } from 'path';
+import { fileURLToPath } from 'url';
 
 const app = express();
 const port = process.env.PORT || 4000;
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
 // const corsOptions = {
 //     origin: 'https://cryptomfrontend.onrender.com', // Allow only this origin (your frontend)
 //     credentials: true, // Allow cookies to be sent with the request
@@ -36,19 +41,6 @@ app.use(cors({
     credentials: true
   }));
 
-//   app.options('*', cors({
-//   origin: function(origin, callback) {
-//     console.log('Preflight request origin:', origin); // Log the origin for preflight requests
-//     if (!origin || allowedOrigins.includes(origin)) {
-//       callback(null, true);
-//     } else {
-//       callback(new Error('Not allowed by CORS'));
-//     }
-//   },
-//   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-//   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
-//   credentials: true
-// }));
 
 // Use body-parser to parse JSON request bodies
 app.use(bodyParser.json());
@@ -66,9 +58,18 @@ app.use("/bybit", bybitRoutes);
 app.use("/movers", coinGeckoRoutes);
 app.use("/chat", chartGptRouter); // OpenAI chatbot route
 
-app.get("/", (req, res) => {
-  res.send("Welcome to the cryptocurrency API");
+
+// Serve static files from the React app
+app.use(express.static(join(__dirname, 'dist'))); // Adjust 'build' if necessary
+
+// Catch-all route to serve the React app
+app.get('*', (req, res) => {
+  res.sendFile(join(__dirname, 'dist', 'index.html')); // Adjust path if necessary
 });
+
+// app.get("/", (req, res) => {
+//   res.send("Welcome to the cryptocurrency API");
+// });
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
