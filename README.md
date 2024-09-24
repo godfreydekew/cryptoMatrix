@@ -1,4 +1,5 @@
 
+![](/client/src/assets/images/m3.png)
 # CryptoMatrix
 CryptoMatrix is a web-based platform designed to manage cryptocurrency portfolios. It integrates with Bybit and CoinGecko APIs to fetch real-time data, track balances, and manage user API keys. It also includes features like authentication, email notifications, and a user-friendly frontend dashboard.
 
@@ -116,11 +117,11 @@ EMAIL_PASSWORD=your_email_password
 3. Access the application by opening `http://localhost:3000` in your web browser
 
 
-## <span style="color: green;">CryptoMatrix Backend Documentation</span> [click here](https://godfreydekew.github.io/cryptoMatrix/)
+## CryptoMatrix Backend Documentation  [click here](https://godfreydekew.github.io/cryptoMatrix/)
 
 All backend functions documentation including prototypes, parameters, and return values.
 
-## <span style="color: orange;">Postman API Documentation</span> [click here](https://documenter.getpostman.com/view/25889133/2sAXqv6M6f)
+## Postman API Documentation  [click here](https://documenter.getpostman.com/view/25889133/2sAXqv6M6f)
 
 Visit the link to see the request body and response for all endpoints.
 
