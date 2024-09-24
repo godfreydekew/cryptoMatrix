@@ -21,7 +21,7 @@ import RegisterForm from '../Auth/ConfirmPssword'
 import Navbar from '../Navbar'
 // @ts-ignore
 import support from '../../assets/images/icons.png'
-
+import { FaComments } from 'react-icons/fa'; 
 const authTab = [
   {
     name: 'Log In',
@@ -125,7 +125,7 @@ const LandingPage: React.FC = () => {
                 Access your complete transaction history, including deposits,
                 withdrawals, and trades, in one place.
               </p>
-              <button onClick={() => navigate('/transactions')}>
+              <button onClick={() => navigate('/connect')}>
                 View History
               </button>
             </div>
@@ -136,7 +136,7 @@ const LandingPage: React.FC = () => {
                 Analyze your cryptocurrency portfolio with detailed reports and
                 insights to optimize your investments.
               </p>
-              <button onClick={() => navigate('/analysis')}>
+              <button onClick={() => navigate('/connect')}>
                 Analyze Portfolio
               </button>
             </div>
@@ -200,12 +200,15 @@ const LandingPage: React.FC = () => {
             <img src={support} alt="Support Icon" />
           </div>
           <div className="support-content">
-            <h2>24/7 access to full virtual customer service support</h2>
-            <p>
-              We invest more resources than any other platform in making sure
-              great support from real people is a click away, whenever you need
-              it.
-            </p>
+          <h2>
+          <FaComments className="chat-icon" />
+            24/7 AI-Powered Customer Support</h2>
+          <p>
+            Our advanced AI assistant is here to provide instant support at any time.
+             Whether you have questions or need assistance, you can rely on our intelligent 
+             chatbot to help you navigate your crypto experience effortlessly.
+          </p>
+
             <button
               className="get-started-btn"
               onClick={() => navigate('/connect')}>
@@ -216,74 +219,6 @@ const LandingPage: React.FC = () => {
 
         {/* Footer Section */}
         <footer className="CryptoMatrix-footer">
-          {/* <div className="footer-content">
-            <div className="footer-left">
-              <h1>CryptoMatrix</h1>
-              <p>
-                CryptoMatrix, the world’s leading bitcoin ATM operator, makes it
-                so flippin’ easy to buy and sell bitcoin via cash, card, or bank
-                transfer.
-              </p>
-              <p>
-                Sign up to get the latest in CryptoMatrix news, discounts, and
-                more.
-              </p>
-              <div className="email-input-wrapper">
-                <input
-                  type="email"
-                  placeholder="Email Address"
-                  className="email-input"
-                />
-                <button className="submit-btn">
-                  <span className="arrow">&rarr;</span>
-                </button>
-              </div>
-            </div>
-            <div className="footer-right">
-              <div className="footer-links">
-                <div className="company">
-                  <h3>Company</h3>
-                  <ul>
-                    <li>
-                      <a href="#">About</a>
-                    </li>
-                    <li>
-                      <a href="#">Careers</a>
-                    </li>
-                    <li>
-                      <a href="#">Press</a>
-                    </li>
-                    <li>
-                      <a href="#">News</a>
-                    </li>
-                    <li>
-                      <a href="#">Merch</a>
-                    </li>
-                  </ul>
-                </div>
-                <div className="privacy">
-                  <h3>Privacy Policy and Terms of Service</h3>
-                  <ul>
-                    <li>
-                      <a href="#">CryptoMatrix Privacy Policy</a>
-                    </li>
-                    <li>
-                      <a href="#">CryptoMatrix Biometrics Privacy Policy</a>
-                    </li>
-                    <li>
-                      <a href="#">CryptoMatrix Financial Privacy Notice</a>
-                    </li>
-                    <li>
-                      <a href="#">CryptoMatrix Terms of Service</a>
-                    </li>
-                    <li>
-                      <a href="#">CryptoMatrix Trade Desk Terms of Service</a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div> */}
           <div className="footer-bottom">
             <p>© 2024 CryptoMatrix</p>
             <a

@@ -416,7 +416,11 @@
       }
     }
   }
-
+  .chat-icon {
+    margin-right: 8px; /* Adjust the spacing between the icon and text */
+    color: #007bff; /* Change the color to match your theme */
+  }
+  
   .CryptoMatrix-footer {
     background-color: #000; // Adjust the color as needed
     color: #fff;
@@ -430,6 +434,7 @@
       align-items: flex-start;
       padding: 20px 0;
     }
+    
 
     .footer-left {
       width: 40%;
