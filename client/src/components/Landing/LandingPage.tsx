@@ -91,9 +91,17 @@ const LandingPage: React.FC = () => {
             Track your balance, monitor transactions, and analyze your
             portfolio, all in one place.
           </p>
-          <button className="cta-button" onClick={() => navigate('/connect')}>
-            Get Started
-          </button>
+          <div className="btn_container">
+            <button className="cta-button" onClick={() => navigate('/connect')}>
+              Get Started
+            </button>
+            <a
+              href="https://github.com/godfreydekew/cryptoMatrix"
+              target="_blank"
+              className="cta-button github">
+              Github Repo
+            </a>
+          </div>
         </section>
 
         {/* Features Section */}
@@ -278,6 +286,12 @@ const LandingPage: React.FC = () => {
           </div> */}
           <div className="footer-bottom">
             <p>© 2024 CryptoMatrix</p>
+            <a
+              href="https://github.com/godfreydekew/cryptoMatrix"
+              target="_blank"
+              className="">
+              Contribute: Github Repo
+            </a>
           </div>
         </footer>
       </div>

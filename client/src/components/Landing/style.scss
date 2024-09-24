@@ -89,7 +89,10 @@
   font-size: 20px;
   font-weight: bold;
 }
-
+.btn_container {
+  display: flex;
+  gap: 1rem;
+}
 .cta-button {
   padding: 10px 20px;
   font-size: 16px;
@@ -99,6 +102,13 @@
   cursor: pointer;
   text-align: center;
   text-decoration: none;
+  &.github {
+    background-color: transparent !important;
+    border: 1.5px solid $purple !important;
+    &:hover {
+      background-color: $purple !important;
+    }
+  }
 }
 
 .pd_landing {
@@ -517,7 +527,18 @@
     .footer-bottom {
       text-align: center;
       font-size: 0.9rem;
-      margin-top: 20px;
+      // margin-top: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 3rem;
+      a {
+        color: white;
+        text-decoration: none;
+        &:hover {
+          color: $grey01;
+        }
+      }
     }
   }
 
