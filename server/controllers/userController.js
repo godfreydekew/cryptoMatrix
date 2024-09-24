@@ -314,6 +314,12 @@ const resetPassword = async (req, res) => {
         // const salt = await bcrypt.genSalt(10);
         // user.password = await bcrypt.hash(newPassword, salt);
         user.password = newPassword;
+        // Store user info in session
+        req.session.userId = user._id;
+        req.session.username = user.username;
+        req.session.apiKey = user.apiKey;  
+        req.session.secretKey = user.secretKey;
+        
         user.recoveryCode = null;
         await user.save();
 
