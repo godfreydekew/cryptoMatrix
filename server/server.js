@@ -1,13 +1,24 @@
 //server.js
+/**
+ * @module server
+ * @description This module sets up an Express server for a cryptocurrency API, 
+ *              handling user routes, Bybit trading API routes, 
+ *              CoinGecko market data routes, and OpenAI chatbot integration.
+ * 
+ * The server is configured with CORS to allow cross-origin requests, 
+ * uses body-parser to parse incoming request bodies, 
+ * and establishes a session management system with MongoDB.
+ */
+
 import 'dotenv/config';
 import express from "express";
-import cors from "cors"; // Import CORS for handling cross-origin requests
-import bodyParser from "body-parser"; // Import body-parser for parsing JSON
+import cors from "cors"; 
+import bodyParser from "body-parser"; 
 import bybitRoutes from "./routes/bybitRoutes.js";
 import coinGeckoRoutes from "./routes/coinGeckoRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import chartGptRouter from "./routes/openAI.js"
-import sessionMiddleware from "./config/session.js"; // MongoDB-based session
+import sessionMiddleware from "./config/session.js"; 
 import connectDB from "./config/db.js";
 import { dirname, join } from 'path';
 import path from 'path';
@@ -20,17 +31,10 @@ const __dirname = path.dirname(__filename);
 
 console.log(__dirname);
 
-// const corsOptions = {
-//     origin: 'https://cryptomfrontend.onrender.com', // Allow only this origin (your frontend)
-//     credentials: true, // Allow cookies to be sent with the request
-//   };
-  
-//   app.use(cors(corsOptions)); //
-
 const allowedOrigins = ['http://localhost:3000', 'https://cryptomfrontend.onrender.com'];
 
 app.set("trust proxy", 1);
-// Enable CORS for all routes
+
 app.use(cors({
     origin: function(origin, callback) {
       if (!origin || allowedOrigins.includes(origin)) {
@@ -72,14 +76,6 @@ app.use((req, res) => {
 });
 
 
-// // Serve static files from the React app
-// app.use(express.static(path.join(__dirname, '../client/dist')));
-
-// // Catch-all route to serve the React app
-// app.get('*', (req, res) => {
-//   console.log(`Catch-all route triggered for: ${req.path}`);
-//   res.sendFile(path.join(__dirname, '../client/dist', 'index.html'));
-// });
 app.get("/", (req, res) => {
   res.send("Welcome to the cryptocurrency API");
 });

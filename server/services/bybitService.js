@@ -6,12 +6,19 @@
  * from the Bybit trading platform. These services utilize the Bybit API client configured 
  * in the `config/bybit.js` file.
  */
+
 import axios from 'axios'; 
 import createBybitClient from '../config/bybit.js'; 
 import getBalance from './allAssets.js';
 
-
-// Function to convert coin balances to USD
+/**
+ * Converts a specified coin balance to its equivalent value in USD.
+ *
+ * @param {string} coinSymbol - The symbol of the coin to convert (e.g., 'BTC').
+ * @param {number} amount - The amount of the coin to convert.
+ * @returns {Promise<number>} - The equivalent value in USD.
+ * @throws {Error} Throws an error if there is an issue with the conversion process.
+ */
 const convertToUSD = async (coinSymbol, amount) => {
     try {
         // Request the price of the coin in USD from Coinbase
@@ -26,57 +33,33 @@ const convertToUSD = async (coinSymbol, amount) => {
 };
 
 
-// // Function to calculate total balance in USD
-// const calculateTotalBalanceInUSD = async (balances) => {
-//     let totalBalanceInUSD = 0;
-//     // Iterate over each balance and convert to USD
-//     for (const balance of balances) {
-//         const coin = balance.coin;
-//         const walletBalance = parseFloat(balance.walletBalance);
-//         // Skip if walletBalance is zero
-//         if (walletBalance === 0) continue;
-//         // Convert coin balance to USD
-//         const valueInUSD = await convertToUSD(coin, walletBalance);
-//         totalBalanceInUSD += valueInUSD;
-//     }
-
-//     return totalBalanceInUSD;
-// };
-
-// // Get balances and calculate total balance in USD
-// const getBalancesAndCalculateTotal = async (coin = '') => {
-//     try {
-//         const balances = await getBalance('FUND', coin);
-//         const totalUSD = await calculateTotalBalanceInUSD(balances);
-//         console.log(`Total Balance in USD: $${totalUSD.toFixed(2)}`);
-//         return totalUSD;
-//     } catch (error) {
-//         console.error('Error calculating total balance in USD:', error);
-//         return -1;
-//     }
-// };
-
-// Fetch balances and calculate total balance
-
-
 
 //https://bybit-exchange.github.io/docs/v5/asset/withdraw/withdraw-record
-
+/**
+ * Fetches withdrawal transactions for a specified date range from the Bybit API.
+ *
+ * @param {string} apiKey - The API key for authentication with the Bybit API.
+ * @param {string} secretKey - The API secret for authentication with the Bybit API.
+ * @param {number} startTime - The start time for the transaction search (timestamp).
+ * @param {number} endTime - The end time for the transaction search (timestamp).
+ * @returns {Promise<Object>} - The withdrawal transaction records.
+ * @throws {Error} Throws an error if the API response indicates a failure.
+ */
 const getTransactions = async (apiKey, secretKey, startTime, endTime) => {
     try {
         
         const bybitClient = createBybitClient(apiKey, secretKey);
         // console.log(bybitClient)
         const response = await bybitClient.getWithdrawalRecords({
-            withdrawType: 2, // Adjust as needed
-            limit: 20,  // Adjust limit if needed
+            withdrawType: 2,
+            limit: 20,  
             startTime: startTime,
             endTime: endTime
         });
 
         if (response.retMsg!== 'success') {
             console.error('Error getting transactions:', response.retMsg);
-            throw new Error(response.retMsg);  // Throw an error with the retMsg for easier debugging.
+            throw new Error(response.retMsg); 
         }
         return response.result;
     } catch (error) {
@@ -85,19 +68,30 @@ const getTransactions = async (apiKey, secretKey, startTime, endTime) => {
     } 
 };
 
+
+/**
+ * Fetches deposit records for a specified date range from the Bybit API.
+ *
+ * @param {string} apiKey - The API key for authentication with the Bybit API.
+ * @param {string} secretKey - The API secret for authentication with the Bybit API.
+ * @param {number} startTime - The start time for the deposit record search (timestamp).
+ * @param {number} endTime - The end time for the deposit record search (timestamp).
+ * @returns {Promise<Object>} - The deposit transaction records.
+ * @throws {Error} Throws an error if the API response indicates a failure.
+ */
 const getDepositRecords = async (apiKey, secretKey, startTime, endTime) => {
     try {
         const bybitClient = createBybitClient(apiKey, secretKey);
         const response = await bybitClient.getDepositRecords({
-            coin: '',  // Adjust this if you want to filter by specific coin
+            coin: '',  
             startTime: startTime,
             endTime: endTime,
-            limit: 20  // Adjust limit if needed
+            limit: 20  
         });
 
         if (response.retMsg !== 'success') {
             console.error('Error getting deposit records:', response.retMsg);
-            throw new Error(response.retMsg);  // Throw an error with the retMsg for easier debugging
+            throw new Error(response.retMsg);  
         }
         return response.result;
     } catch (error) {
@@ -106,31 +100,20 @@ const getDepositRecords = async (apiKey, secretKey, startTime, endTime) => {
     }
 };
 
-// const fetchAllTransactions = async () => {
-//     let allTransfers = [];
-
-//     // Query 1: 16th July to 15th August
-//     let result1 = await getTransactions(new Date('2024-07-16').getTime(), new Date('2024-08-15').getTime());
-//     allTransfers = allTransfers.concat(result1.rows);
-
-//     // Query 2: 16th August to 21st August
-//     let result2 = await getTransactions(new Date('2024-08-16').getTime(), new Date('2024-09-12').getTime());
-//     allTransfers = allTransfers.concat(result2.rows);
-
-//     return allTransfers;
-// };
-
-// fetchAllTransactions().then(transfers => {
-//     console.log(transfers);  // This will log all the transactions within the time range
-// }).catch(error => {
-//     console.error('Error fetching all transactions:', error);
-// });
-
-
-// Service to get assets
 
 
 // Helper function to get transactions for a specific date range
+/**
+ * Fetches transactions for a specific date range and enhances the transaction data.
+ *
+ * @param {string} apiKey - The API key for authentication with the Bybit API.
+ * @param {string} secretKey - The API secret for authentication with the Bybit API.
+ * @param {Date} startDate - The start date for fetching transactions.
+ * @param {Date} endDate - The end date for fetching transactions.
+ * @returns {Promise<Array>} - An array of transaction records.
+ * @throws {Error} Throws an error if the date objects are invalid or if the fetch fails.
+ */
+
 const fetchTransactionsInRange = async (apiKey, secretKey, startDate, endDate) => {
     if (!(startDate instanceof Date) || !(endDate instanceof Date)) {
         console.error('Invalid date object:', { startDate, endDate });
@@ -147,11 +130,19 @@ const fetchTransactionsInRange = async (apiKey, secretKey, startDate, endDate) =
 };
 
 
+/**
+ * Fetches all transactions (withdrawals and deposits)
+ *
+ * @param {string} apiKey - The API key for authentication with the Bybit API.
+ * @param {string} secretKey - The API secret for authentication with the Bybit API.
+ * @returns {Promise<Object>} - An object containing arrays of withdrawal and deposit transactions.
+ * @throws {Error} Throws an error if the fetch process encounters an issue.
+ */
 const fetchAllTransactions = async (apiKey, secretKey) => {
     try {
         const currentDate = new Date();
-        const endDate = new Date(currentDate.getTime() - 1); // 1 day before current date
-        let startDate = new Date(endDate.getTime() - (100 * 24 * 60 * 60 * 1000)); // 100 days before end date
+        const endDate = new Date(currentDate.getTime() - 1);
+        let startDate = new Date(endDate.getTime() - (100 * 24 * 60 * 60 * 1000)); 
 
         let allWithdrawals = [];
         let allDeposits = [];
@@ -182,25 +173,21 @@ const fetchAllTransactions = async (apiKey, secretKey) => {
         };
 
         for (let i = 0; i < 4; i++) {
-            const rangeEndDate = new Date(startDate.getTime() + (25 * 24 * 60 * 60 * 1000) - (24 * 60 * 60 * 1000)); // End of range - 1 day
+            const rangeEndDate = new Date(startDate.getTime() + (25 * 24 * 60 * 60 * 1000) - (24 * 60 * 60 * 1000));
 
-            // Fetch withdrawal and deposit transactions in parallel
             const [withdrawalTransactions, depositTransactions] = await Promise.all([
                 fetchTransactionsInRange(apiKey, secretKey, startDate, rangeEndDate),
                 getDepositRecords(apiKey, secretKey, startDate.getTime(), rangeEndDate.getTime())
             ]);
 
-            // Enhance transactions in parallel
             const [enhancedWithdrawalTransactions, enhancedDepositTransactions] = await Promise.all([
                 enhanceTransactions(withdrawalTransactions, true),
                 enhanceTransactions(depositTransactions.rows, false)
             ]);
 
-            // Combine withdrawals and deposits
             allWithdrawals = allWithdrawals.concat(enhancedWithdrawalTransactions);
             allDeposits = allDeposits.concat(enhancedDepositTransactions);
 
-            // Move to the next range
             startDate = new Date(rangeEndDate.getTime() + (24 * 60 * 60 * 1000));
         }
 
@@ -215,20 +202,27 @@ const fetchAllTransactions = async (apiKey, secretKey) => {
 };
 
 
+/**
+ * Retrieves all assets with their respective prices.
+ *
+ * @param {string} apiKey - The API key for authentication with the Bybit API.
+ * @param {string} secretKey - The API secret for authentication with the Bybit API.
+ * @returns {Promise<Array>} - An array of asset details with their prices.
+ * @throws {Error} Throws an error if the retrieval process encounters an issue.
+ */
 const getAllAssetsWithPrice = async (apiKey, secretKey) => {
     try {
-        const balances = await getBalance(apiKey, secretKey); // Fetch all asset balances
+        const balances = await getBalance(apiKey, secretKey); 
         const assetDetails = await Promise.all(balances.map(async (balance) => {
             const coin = balance.coin;
             const walletBalance = parseFloat(balance.walletBalance);
 
-            // Skip if walletBalance is zero
+            
             if (walletBalance === 0) {
                 return null;
             }
 
-            // Get market price of the coin
-            const priceInUSD = await convertToUSD(coin, 1); // Get price of 1 unit
+            const priceInUSD = await convertToUSD(coin, 1); 
             const amountInUSD = await convertToUSD(coin, walletBalance);
 
             return {
@@ -239,7 +233,6 @@ const getAllAssetsWithPrice = async (apiKey, secretKey) => {
             };
         }));
 
-        // Filter out null values (where walletBalance was zero)
         return assetDetails.filter(asset => asset !== null);
     } catch (error) {
         console.error('Error retrieving all assets with price:', error);
@@ -247,7 +240,16 @@ const getAllAssetsWithPrice = async (apiKey, secretKey) => {
     }
 };
 
+
 // Example usage of getAllAssetsWithPrice
+/**
+ * Retrieves balances of all assets and calculates the total balance in USD.
+ *
+ * @param {string} apiKey - The API key for authentication with the Bybit API.
+ * @param {string} secretKey - The API secret for authentication with the Bybit API.
+ * @returns {Promise<number>} - The total balance in USD.
+ * @throws {Error} Throws an error if the retrieval process encounters an issue.
+ */
 const getBalancesAndCalculateTotal = async (apiKey, secretKey) => {
     try {
         const assets = await getAllAssetsWithPrice(apiKey, secretKey);

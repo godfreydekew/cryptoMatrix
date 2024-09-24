@@ -13,6 +13,33 @@ const openai = new OpenAI({
   // }
 })
 
+/**
+ * OpenAI routes.
+ * 
+ * This route handles requests for interacting with the OpenAI API to generate 
+ * responses based on user-provided messages, specifically focusing on cryptocurrency 
+ * and blockchain technology.
+ * 
+ * @module routes/openAIRoutes
+ * @requires express
+ * @requires openai
+ */
+
+/**
+ * POST /gpt
+ * 
+ * Route to send a user message to the OpenAI API and receive a response. 
+ * The AI is configured to provide informative responses related to 
+ * cryptocurrency and blockchain technology.
+ * 
+ * @name PostGptResponse
+ * @route {POST} /gpt
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @param {string} req.body.message - The user's input message to the AI.
+ * @returns {Object} The response containing the AI's message.
+ * @throws {Error} If an error occurs while processing the request.
+ */
 router.post('/gpt', async (req, res) => {
   try {
     const { message } = req.body;
@@ -21,6 +48,7 @@ router.post('/gpt', async (req, res) => {
       role: "system",
       content: "You are an AI expert in cryptocurrency and blockchain technology. Provide brief, informative responses to educate users about cryptocurrency in a clear and concise manner."
     };
+    
     const completion = await openai.chat.completions.create({
       model: "openai/gpt-4o-mini",//gpt-3.5-turbo
       messages: [

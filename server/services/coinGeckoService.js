@@ -1,6 +1,11 @@
 import axios from 'axios';
 
-// Fetch Top Movers and return filtered data
+/**
+ * Fetches the top movers in the cryptocurrency market and returns filtered data.
+ *
+ * @returns {Promise<Array<Object>>} - A promise that resolves to an array of objects containing details of the top movers.
+ * @throws {Error} Throws an error if there is an issue fetching the data from CoinGecko.
+ */
 const fetchTopMovers = async () => {
     try {
         console.log('Fetching Top Movers');
@@ -8,12 +13,10 @@ const fetchTopMovers = async () => {
             params: {
                 vs_currency: 'usd',
                 order: 'market_cap_desc',
-                per_page: 20, // Get top 20 movers
-                price_change_percentage: '24h' // 24hr price change
+                per_page: 10, 
+                price_change_percentage: '24h'
             }
         });
-
-        
 
         // Filter the data to only include relevant fields up to total supply
         return response.data.map((coin) => ({
@@ -33,12 +36,17 @@ const fetchTopMovers = async () => {
     }
 };
 
-// console.log(await getTopMovers());
 
+/**
+ * Fetches the latest cryptocurrency news from CoinGecko.
+ *
+ * @returns {Promise<Array<Object>>} - A promise that resolves to an array of news objects.
+ * @throws {Error} Throws an error if there is an issue fetching the news from CoinGecko.
+ */
 const fetchCryptoNews = async () => {
     try {
         const response = await axios.get('https://api.coingecko.com/api/v3/news');
-        return response.data.data; // Extract news data from the response
+        return response.data.data; 
     } catch (error) {
         console.error('Error fetching cryptocurrency news:', error);
         throw new Error('Error fetching cryptocurrency news');

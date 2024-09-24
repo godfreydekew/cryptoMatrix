@@ -18,7 +18,12 @@ const transporter = nodemailer.createTransport({
 });
 
 
-// Function to send a welcome email after successful registration
+/**
+ * Sends a welcome email after successful user registration.
+ * @function sendWelcomeEmail
+ * @param {string} username - Username of the newly registered user.
+ * @param {string} recipientEmail - The email address of the recipient.
+ */
 const sendWelcomeEmail = (username, recipientEmail) => {
     const subject = `Welcome to CryptoMatrix, ${username}!`;
     const text = `Dear ${username},
@@ -38,8 +43,8 @@ const sendWelcomeEmail = (username, recipientEmail) => {
     The CryptoMatrix Team`;
 
     const mailOptions = {
-        from: "dekewgodfrey@gmail.com",  // Sender email
-        to: recipientEmail,  // Recipient email
+        from: "dekewgodfrey@gmail.com", 
+        to: recipientEmail,  
         subject: subject,
         text: text
     };
@@ -52,7 +57,17 @@ const sendWelcomeEmail = (username, recipientEmail) => {
         }
     });
 };
-// Signup controller
+
+
+/**
+ * Registers a new user and saves their credentials.
+ * @async
+ * @function registerUser
+ * @param {Object} req - Express request object.
+ * @param {Object} res - Express response object.
+ * @returns {Promise<void>} Responds with a success or failure message.
+ */
+
 const registerUser = async (req, res) => {
     
     const { username, email, password, apiKey, secretKey } = req.body;
@@ -70,7 +85,7 @@ const registerUser = async (req, res) => {
         const response = await bybitClient.getAllCoinsBalance({ accountType, coin });
         if (response.retMsg !== 'success') {
           console.error('Error getting balance:', response.retMsg);
-          throw new Error(response.retMsg);  // Throw an error with the retMsg for easier debugging.
+          throw new Error(response.retMsg);  
         } 
 
         const user = await User.create({ username, email, password, apiKey, secretKey });
@@ -91,7 +106,14 @@ const registerUser = async (req, res) => {
 };
 
 
-// Login controller
+/**
+ * Logs in a user by verifying their email and password.
+ * @async
+ * @function loginUser
+ * @param {Object} req - Express request object.
+ * @param {Object} res - Express response object.
+ * @returns {Promise<void>} Responds with a login success or error message.
+ */
 const loginUser = async (req, res) => {
 
     console.log('login Session data:', req.session);
@@ -120,8 +142,13 @@ const loginUser = async (req, res) => {
     }
 };
 
-
-// Logout controller
+/**
+ * Logs out the user by destroying their session and clearing the session cookie.
+ * @function logoutUser
+ * @param {Object} req - Express request object.
+ * @param {Object} res - Express response object.
+ * @returns {void} Responds with a logout success message.
+ */
 const logoutUser = (req, res) => {
     console.log('Session data:', req.session);
 
@@ -132,7 +159,15 @@ const logoutUser = (req, res) => {
     });
 };
 
-// Update API Key controller
+
+/**
+ * Updates the user's API key and secret key.
+ * @async
+ * @function updateApiKey
+ * @param {Object} req - Express request object.
+ * @param {Object} res - Express response object.
+ * @returns {Promise<void>} Responds with an API keys update success message.
+ */
 const updateApiKey = async (req, res) => {
     // Check session data
     console.log('Session data:', req.session);
@@ -166,6 +201,14 @@ const updateApiKey = async (req, res) => {
 };
 
 
+/**
+ * Retrieves the user's API key and secret key.
+ * @async
+ * @function getApiKeys
+ * @param {Object} req - Express request object.
+ * @param {Object} res - Express response object.
+ * @returns {Promise<void>} Responds with the user's API key and secret key.
+ */
 const getApiKeys = async (req, res) => {
     const { userId } = req.session;
 
@@ -179,12 +222,22 @@ const getApiKeys = async (req, res) => {
     }
 };
 
-// Helper function to generate a 5-digit random code
+/**
+ * Generates a 5-digit random recovery code.
+ * @function generateRecoveryCode
+ * @returns {string} A 5-digit random recovery code.
+ */
 const generateRecoveryCode = () => {
     return Math.floor(10000 + Math.random() * 90000).toString();
 };
 
-// Function to send the recovery code via email
+
+/**
+ * Sends a recovery code via email.
+ * @function sendRecoveryCode
+ * @param {string} email - The recipient's email address.
+ * @param {string} code - The recovery code to be sent.
+ */
 const sendRecoveryCode = (email, code) => {
     const mailOptions = {
         from: 'dekewgodfrey@gmail.com',
@@ -203,6 +256,14 @@ const sendRecoveryCode = (email, code) => {
 };
 
 
+/**
+ * Requests a password reset by sending a recovery code to the user's email.
+ * @async
+ * @function requestPasswordReset
+ * @param {Object} req - Express request object.
+ * @param {Object} res - Express response object.
+ * @returns {Promise<void>} Responds with a recovery code sent message.
+ */
 const requestPasswordReset = async (req, res) => {
     const { email } = req.body;
 
@@ -227,7 +288,14 @@ const requestPasswordReset = async (req, res) => {
 };
 
 
-// Password reset (validate recovery code and set new password)
+/**
+ * Resets the user's password by validating the recovery code and setting a new password.
+ * @async
+ * @function resetPassword
+ * @param {Object} req - Express request object.
+ * @param {Object} res - Express response object.
+ * @returns {Promise<void>} Responds with a password reset success message.
+ */
 const resetPassword = async (req, res) => {
     const { email, recoveryCode, newPassword } = req.body;
 
