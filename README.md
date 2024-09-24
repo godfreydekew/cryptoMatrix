@@ -1,6 +1,6 @@
 
 ![](/client/src/assets/images/m3.png)
-# CryptoMatrix
+# CryptoMatrix  [demo video](https://youtu.be/MVNf__pef8o?si=wDUer_lO-jv90hC2)
 CryptoMatrix is a web-based platform designed to manage cryptocurrency portfolios. It integrates with Bybit and CoinGecko APIs to fetch real-time data, track balances, and manage user API keys. It also includes features like authentication, email notifications, and a user-friendly frontend dashboard.
 
 ## Authors
