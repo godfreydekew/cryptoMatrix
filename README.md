@@ -18,14 +18,12 @@ CryptoMatrix is a web-based platform designed to manage cryptocurrency portfolio
 - [Tech Stack](#tech-stack)
 - [Getting Started](#getting-started)
 - [Usage](#usage)
-- [API Documentation](#api-documentation)
 - [Testing](#testing)
 - [Contributing](#contributing)
 - [License](#license)
 - [Contact](#contact)
 
 ## Overview
-
 CryptoMatrix empowers users to efficiently manage their cryptocurrency portfolios by integrating real-time data from Bybit and CoinGecko APIs. With features like user authentication, API key management, and email notifications, it provides a secure and user-friendly experience for both novice and experienced crypto traders.
 
 ## Features
@@ -118,15 +116,14 @@ EMAIL_PASSWORD=your_email_password
 3. Access the application by opening `http://localhost:3000` in your web browser
 
 
-## API Documentation [click here](https://godfreydekew.github.io/cryptoMatrix/)
+## <span style="color: green;">CryptoMatrix Backend Documentation</span> [click here](https://godfreydekew.github.io/cryptoMatrix/)
 
-Certainly! I'll update the API Documentation section in the README to include all the endpoints you've provided. Here's the revised section:
+All backend functions documentation including prototypes, parameters, and return values.
 
+## <span style="color: orange;">Postman API Documentation</span> [click here](https://documenter.getpostman.com/view/25889133/2sAXqv6M6f)
 
+Visit the link to see the request body and response for all endpoints.
 
-
-
-## API Documentation
 
 ### User Routes
 - `POST /api/user/register`: Register a new user
@@ -144,8 +141,8 @@ Certainly! I'll update the API Documentation section in the README to include al
 - `GET /api/bybit/assets`: Fetch all assets with current prices
 
 ### CoinGecko Routes
-- `GET /api/coingecko/top-movers`: Fetch top moving cryptocurrencies
-- `GET /api/coingecko/crypto-news`: Fetch latest cryptocurrency news
+- `GET /api/movers/top-movers`: Fetch top moving cryptocurrencies
+- `GET /api/movers/crypto-news`: Fetch latest cryptocurrency news
 
 ### OpenAI Route
 - `POST /api/openai/gpt`: Send a message to OpenAI and receive a response about cryptocurrency and blockchain
