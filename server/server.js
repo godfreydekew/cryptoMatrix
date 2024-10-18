@@ -84,21 +84,18 @@ app.use(cors({
   }));
 
 
-// Use body-parser to parse JSON request bodies
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true })); // To parse URL-encoded data
 
-// MongoDB connection
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true })); 
+
 connectDB();
 
-// Use session middleware
 app.use(sessionMiddleware);
 
-// Routes
 app.use("/user", userRoutes);
 app.use("/bybit", bybitRoutes);
 app.use("/movers", coinGeckoRoutes);
-app.use("/chat", chartGptRouter); // OpenAI chatbot route
+app.use("/chat", chartGptRouter); 
 
 
 app.use((req, res, next) => {
